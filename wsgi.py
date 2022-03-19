@@ -1,7 +1,24 @@
-from flask import Flask
+# from flask import Flask
  
+# app = Flask(__name__)
+ 
+# @app.route("/")
+# def home_view():
+#         return "<h1>Welcome to Geeks for Geeks</h1>"
+
+import threading
+from flask import Flask, url_for, request, jsonify
+
 app = Flask(__name__)
- 
-@app.route("/")
-def home_view():
-        return "<h1>Welcome to Geeks for Geeks</h1>"
+
+@app.route('/getBlog', methods=['POST', 'GET'])
+def getBlog():
+    results = {'processed': 'true'}
+    return jsonify(results)
+
+@app.route('/')
+def getIndex():
+    return "<p>Hello World!</p>"
+
+#app.run(debug=False, host="127.0.0.1", port=500, use_reloader=False)
+app.run(debug=True)
