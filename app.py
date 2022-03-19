@@ -3,6 +3,11 @@ from flask import Flask, url_for, request, jsonify
 
 app = Flask(__name__)
 
+@app.route('/', methods=['POST', 'GET'])
+def getBlog():
+    results = {'processed': 'true'}
+    return jsonify(results)
+
 @app.route('/getBlog', methods=['POST', 'GET'])
 def getBlog():
     results = {'processed': 'true'}
