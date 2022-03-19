@@ -8,4 +8,8 @@ def getBlog():
     results = {'processed': 'true'}
     return jsonify(results)
 
+@app.route('/')
+def index():
+    return '<p>Hello World!</p>'
+
 app.run(debug=False, host="127.0.0.1", port=500, use_reloader=False)
