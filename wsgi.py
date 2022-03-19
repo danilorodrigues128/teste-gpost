@@ -6,19 +6,24 @@
 # def home_view():
 #         return "<h1>Welcome to Geeks for Geeks</h1>"
 
-import threading
-from flask import Flask, url_for, request, jsonify
+from flask import Flask, jsonify, request
+from flask_cors import CORS, cross_origin
 
-app = Flask(__name__)
+app = Flask(_name_)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
-@app.route('/getBlog', methods=['POST', 'GET'])
-def getBlog():
-    results = {'processed': 'true'}
-    return jsonify(results)
+blog_post = {
+    "title": "oi"
+}
+@app.route("/get_blog")
+@cross_origin()
+def get_blog():
+    global blog_post
+    return jsonify(blog_post)
 
-@app.route('/')
-def getIndex():
-    return "<p>Hello World!</p>"
-
-#app.run(debug=False, host="127.0.0.1", port=500, use_reloader=False)
-app.run(debug=True)
+@app.route("/post_blog")
+@cross_origin()
+def post_blog():
+    print(request.args.get("text"))
+    return jsonify(success=True)
