@@ -15,6 +15,7 @@ import json
 from flask import Flask, jsonify, request
 from flask_mysqldb import MySQL
 from flask_cors import CORS, cross_origin
+from datetime import datetime
 import random
 import traceback
 
@@ -547,7 +548,7 @@ def post_log():
     if(checkHash(hash)):
 
         try:
-            cursor.execute("INSERT INTO log (url, date, author, showAuthor, title, language, urlImage, content) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (url, date, author, showAuthor, title, language, urlImage, content))
+            cursor.execute("INSERT INTO log (url, date, author, showAuthor, title, language, urlImage, content) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (url, datetime.strptime(date, '%b %d %Y %I:%M%p'), author, showAuthor, title, language, urlImage, content))
             mysql.connection.commit()
 
             json = {
