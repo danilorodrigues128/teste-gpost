@@ -211,17 +211,6 @@ def post_works():
 
     data = request.form['data']
     data_JSON = json.loads(data)
-    print (data_JSON[0])
-
-    title = request.form['title']
-    suport = request.form['suport']
-    date = request.form['date']
-    editor = request.form['editor']
-    place = request.form['place']
-    author = request.form['author']
-    language = request.form['language']
-    keywords = request.form['keywords']
-    description = request.form['description']
 
     hash = request.headers['hash']
 
@@ -229,14 +218,24 @@ def post_works():
 
     if(checkHash(hash, cursor)):
         try:
-            cursor.execute("INSERT INTO work (title, suport, date, editor, place, author, language, keywords, description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (title, suport, int(date), editor, place, author, language, keywords, description))
-            mysql.connection.commit()
-            cursor.close()
+            for dataWork in data_JSON :
+                title = dataWork['title']
+                suport = dataWork['suport']
+                date = dataWork['date']
+                editor = dataWork['editor']
+                place = dataWork['place']
+                author = dataWork['author']
+                language = dataWork['language']
+                keywords = dataWork['keywords']
+                description = dataWork['description']
+                cursor.execute("INSERT INTO work (title, suport, date, editor, place, author, language, keywords, description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (title, suport, int(date), editor, place, author, language, keywords, description))
+                mysql.connection.commit()
+                cursor.close()
 
-            vec_json = {
-                "status" : "Succeed",
-                "message" : ""
-            }
+                vec_json = {
+                    "status" : "Succeed",
+                    "message" : ""
+                }
             return jsonify(vec_json)
         except:
             return traceback.print_exc()
