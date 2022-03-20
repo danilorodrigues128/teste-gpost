@@ -223,7 +223,6 @@ def post_works():
 
     if(checkHash(hash, cursor)):
         try:
-            print("Chupa minha pica")
             cursor.execute("INSERT INTO work (title, suport, editor, place, author, language, keywords, description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (title, suport, editor, place, author, language, keywords, description))
             
             mysql.connection.commit()
