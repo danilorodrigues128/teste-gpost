@@ -508,7 +508,7 @@ def post_team():
 
         try:
             hash = generateHash()
-            cursor.execute("INSERT INTO user (name, content, urlImage) VALUES (%s, %s, %s)", (name, content, urlImage))
+            cursor.execute("INSERT INTO team (name, content, urlImage) VALUES (%s, %s, %s)", (name, content, urlImage))
             mysql.connection.commit()
 
             json = {
