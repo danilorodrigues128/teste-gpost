@@ -158,7 +158,7 @@ def get_works():
         return traceback.print_exc()
 
 
-@app.route("/get_arab", method=['GET'])
+@app.route("/get_arab", methods=['GET'])
 @cross_origin()
 def get_arab():
     cursor = mysql.connection.cursor()
@@ -192,7 +192,7 @@ def get_arab():
     except:
         return traceback.print_exc()
 
-@app.route("/get_team", method=['GET'])
+@app.route("/get_team", methods=['GET'])
 @cross_origin()
 def get_team():
     
