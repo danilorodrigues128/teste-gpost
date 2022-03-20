@@ -1,7 +1,7 @@
 -- Command to create the database
 CREATE DATABASE `myDatabase` IF NOT EXISTS;
 
-USE `myDatabase`
+--USE `myDatabase`
 
 CREATE TABLE `user`(
     id INT NOT NULL AUTO_INCREMENT,
@@ -44,6 +44,56 @@ CREATE TABLE `work`(
     language VARCHAR(100),
     keywords VARCHAR(200),
     description VARCHAR(100),
+
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE `arab`(
+    id INT NOT NULL AUTO_INCREMENT,
+    title VARCHAR(100),
+    suport VARCHAR(100),
+    date INT(4),
+    author VARCHAR(100),
+    language VARCHAR(100),
+    keywords VARCHAR(200),
+    description VARCHAR(100),
+
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE `team`(
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100),
+    content TEXT,
+    urlImage VARCHAR(200),
+
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE `log`(
+    id INT NOT NULL AUTO_INCREMENT,
+    url VARCHAR(255),
+    data DATETIME,
+    author VARCHAR(100),
+    showAuthor BOOLEAN DEFAULT 0,
+    title VARCHAR(100),
+    language CHAR(2),
+    urlImage VARCHAR(200),
+    content TEXT,
+
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE `blog`(
+    id INT NOT NULL AUTO_INCREMENT,
+    url VARCHAR(255),
+    data DATETIME,
+    author VARCHAR(100),
+    showAuthor BOOLEAN DEFAULT 0,
+    title VARCHAR(100),
+    language CHAR(2),
+    urlImage VARCHAR(200),
+    content TEXT,
 
     PRIMARY KEY(id)
 );
