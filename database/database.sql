@@ -1,9 +1,9 @@
 -- Command to create the database
-CREATE DATABASE myDatabase IF NOT EXISTS;
+CREATE DATABASE `myDatabase` IF NOT EXISTS;
 
-USE myDatabase
+USE `myDatabase`
 
-CREATE TABLE user(
+CREATE TABLE `user`(
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255),
     username VARCHAR(255),
