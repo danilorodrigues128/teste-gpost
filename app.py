@@ -209,7 +209,7 @@ def post_pages():
 def post_works():
 
     data = request.form['data']
-    print data
+    print (data)
 
     title = request.form['title']
     suport = request.form['suport']
