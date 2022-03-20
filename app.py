@@ -209,7 +209,7 @@ def post_works():
 
     data = request.form['data']
     data_JSON = json.loads(data)
-    print(data_JSON)
+    print(type(data_JSON))
 
     hash = request.headers['hash']
 
