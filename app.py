@@ -140,7 +140,37 @@ def get_team():
 @app.route("/get_log")
 @cross_origin()
 def get_log():
-    pass
+    cursor = mysql.connection.cursor()
+
+    url = request.args.get("url")
+
+    try:
+        flag = cursor.execute("SELECT * FROM log WHERE url = %s", url)
+        data = cursor.fetchone()
+        mysql.connection.commit()
+
+        if flag :
+            json_response = {
+                "id" : data[0],
+                "url" : data[1],
+                "data" : data[2],
+                "author" : data[3],
+                "show_author" : data[4],
+                "title" : data[5],
+                "language" : data[6],
+                "url_image" : data[7],
+                "text" : data[8]
+            }
+        else:
+            json_response = {
+                "status" : "Failed",
+                "error" : "Invalid url!"
+            }
+        
+        return jsonify(json_response)
+    except:
+        return traceback.print_exc()
+    
 
 @app.route("/get_blog", methods=['GET'])
 @cross_origin()
@@ -235,12 +265,7 @@ def post_works():
                         cursor.execute("UPDATE work SET title = %s, suport = %s, date = %s, editor = %s, place = %s, author = %s, language = %s, keywords = %s, description = %s WHERE id = %s", (title, suport, int(date), editor, place, author, language, keywords, description, int(idWork)))
                     mysql.connection.commit()
                     cursor.close()
-                elif action == "delete":
-                    idWork = item["id"]
-                    cursor.execute("DELETE FROM work WHERE id = %s", (int(idWork), ))
-                    mysql.connection.commit()
-                    cursor.close()
-                    
+
             vec_json = {
                 "status" : "Succeed",
                 "message" : ""
