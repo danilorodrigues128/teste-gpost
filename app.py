@@ -59,6 +59,7 @@ def index():
 @app.route("/get_user", methods=['GET'])
 @cross_origin()
 def get_user():
+
     user = request.args.get('username')
     password = request.args.get('password')
 
@@ -80,7 +81,7 @@ def get_user():
                 "status" : "Failed",
                 "error" : "Username or password incorrect!"
             }
-            return jsonify(json)
+        return jsonify(json)
     except:
         return traceback.print_exc() 
 
