@@ -301,7 +301,6 @@ def get_blog():
 @app.route("/post_user", methods=['POST'])
 @cross_origin()
 def post_user():
-
     name = request.form['name']
     username = request.form['username']
     password = request.form['password']
@@ -497,7 +496,35 @@ def post_arab():
 @app.route("/post_team", methods=['POST'])
 @cross_origin()
 def post_team():
-    pass
+    name = request.form['name']
+    content = request.form['content']
+    urlImage = request.form['urlImage']
+    
+    hash = request.headers['hash']
+    
+    cursor = mysql.connection.cursor()
+
+    if(checkHash(hash)):
+
+        try:
+            hash = generateHash()
+            cursor.execute("INSERT INTO user (name, content, urlImage) VALUES (%s, %s, %s)", (name, content, urlImage))
+            mysql.connection.commit()
+
+            json = {
+                "status" : "Succeed",
+                "message" : "Team created with success..."
+            }
+
+            return jsonify(json)
+        except:
+            return traceback.print_exc()
+    else:
+        json = {
+                "status" : "Failed",
+                "message" : "Invalid hash!"
+            }
+        return jsonify(json)
 
 @app.route("/post_log", methods=['POST'])
 @cross_origin()
