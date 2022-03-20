@@ -122,7 +122,6 @@ def get_page():
 @app.route("/get_works", methods=['GET'])
 @cross_origin()
 def get_works():
-    
     cursor = mysql.connection.cursor()
 
     try:
@@ -157,15 +156,70 @@ def get_works():
         return traceback.print_exc()
 
 
-@app.route("/get_arab")
+@app.route("/get_arab", method=['GET'])
 @cross_origin()
 def get_arab():
-    pass
+    cursor = mysql.connection.cursor()
 
-@app.route("/get_team")
+    try:
+        cursor.execute("SELECT * FROM arab WHERE 1")
+        data = cursor.fetchall()
+        mysql.connection.commit()
+
+        vec_json = "["
+
+        for row in range(len(data)):
+            aux = '{"id" : "'+ str(data[row][0]) + \
+                '", "title" : "'+ str(data[row][1]) + \
+                    '", "suport" : "'+ str(data[row][2]) + \
+                        '", "date" : "'+ str(data[row][3]) + \
+                            '", "author" : "'+ str(data[row][4]) + \
+                                '", "language" : "'+ str(data[row][5]) + \
+                                    '", "keywords" : "'+ str(data[row][6]) + \
+                                        '", "descriptions" : "'+ str(data[row][7]) + '"}'
+
+            vec_json += aux
+
+            if not (row == len(data) - 1):
+                vec_json += ","
+        
+        vec_json += "]"
+        #print(vec_json)
+        return jsonify(json.loads(vec_json))
+
+    except:
+        return traceback.print_exc()
+
+@app.route("/get_team", method=['GET'])
 @cross_origin()
 def get_team():
-    pass
+    
+    cursor = mysql.connection.cursor()
+
+    try:
+        cursor.execute("SELECT * FROM team WHERE 1")
+        data = cursor.fetchall()
+        mysql.connection.commit()
+
+        vec_json = "["
+
+        for row in range(len(data)):
+            aux = '{"id" : "'+ str(data[row][0]) + \
+                '", "name" : "'+ str(data[row][1]) + \
+                    '", "content" : "'+ str(data[row][2]) + \
+                        '", "urlImage" : "'+ str(data[row][3]) + '"}'
+
+            vec_json += aux
+
+            if not (row == len(data) - 1):
+                vec_json += ","
+        
+        vec_json += "]"
+        #print(vec_json)
+        return jsonify(json.loads(vec_json))
+
+    except:
+        return traceback.print_exc()
 
 @app.route("/get_log")
 @cross_origin()
@@ -175,8 +229,37 @@ def get_log():
 @app.route("/get_blog", methods=['GET'])
 @cross_origin()
 def get_blog():
-    global blog_post
-    return jsonify(blog_post)
+    cursor = mysql.connection.cursor()
+
+    try:
+        cursor.execute("SELECT * FROM blog WHERE 1")
+        data = cursor.fetchall()
+        mysql.connection.commit()
+
+        vec_json = "["
+
+        for row in range(len(data)):
+            aux = '{"id" : "'+ str(data[row][0]) + \
+                '", "url" : "'+ str(data[row][1]) + \
+                    '", "data" : "'+ str(data[row][2]) + \
+                        '", "author" : "'+ str(data[row][3]) + \
+                            '", "showAuthor" : "'+ str(data[row][4]) + \
+                                '", "title" : "'+ str(data[row][5]) + \
+                                    '", "language" : "'+ str(data[row][6]) + \
+                                        '", "urlImage" : "'+ str(data[row][7]) + \
+                                            '", "content" : "'+ str(data[row][8]) + '"}'
+
+            vec_json += aux
+
+            if not (row == len(data) - 1):
+                vec_json += ","
+        
+        vec_json += "]"
+        #print(vec_json)
+        return jsonify(json.loads(vec_json))
+
+    except:
+        return traceback.print_exc()
 
 
 #---[POST]---#
