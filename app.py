@@ -208,6 +208,9 @@ def post_pages():
 @cross_origin()
 def post_works():
 
+    data = request.form['data']
+    print data
+
     title = request.form['title']
     suport = request.form['suport']
     date = request.form['date']
