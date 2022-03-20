@@ -44,20 +44,9 @@ def index():
 # API Functions
 #---[GET]---#
 
-@app.route("/get_blog", methods=['GET'])
+@app.route("/get_page")
 @cross_origin()
-def get_blog():
-    global blog_post
-    return jsonify(blog_post)
-
-@app.route("/get_post")
-@cross_origin()
-def get_post():
-    pass
-
-@app.route("/get_pages")
-@cross_origin()
-def get_pages():
+def get_page():
     pass
 
 @app.route("/get_works")
@@ -65,27 +54,63 @@ def get_pages():
 def get_works():
     pass
 
-#---[POST]---#
-
-@app.route("/post_blog", methods=['POST'])
+@app.route("/get_arab")
 @cross_origin()
-def post_blog():
-    print(request.args.get("text"))
-    return jsonify(success=True)
-
-@app.route("/post_post")
-@cross_origin()
-def post_post():
+def get_arab():
     pass
 
-@app.route("/post_pages")
+@app.route("/get_team")
 @cross_origin()
-def post_pages():
+def get_team():
+    pass
+
+@app.route("/get_log")
+@cross_origin()
+def get_log():
+    pass
+
+@app.route("/get_blog", methods=['GET'])
+@cross_origin()
+def get_blog():
+    global blog_post
+    return jsonify(blog_post)
+
+@app.route("/get_user")
+@cross_origin()
+def get_user():
+    pass
+
+
+#---[POST]---#
+
+@app.route("/post_page")
+@cross_origin()
+def post_page():
     pass
 
 @app.route("/post_works")
 @cross_origin()
 def post_works():
+    pass
+
+@app.route("/post_arab")
+@cross_origin()
+def post_arab():
+    pass
+
+@app.route("/post_team")
+@cross_origin()
+def post_team():
+    pass
+
+@app.route("/post_log")
+@cross_origin()
+def post_log():
+    pass
+
+@app.route("/post_user")
+@cross_origin()
+def post_user():
     pass
 
 # Looping Flask
