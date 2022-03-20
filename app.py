@@ -217,17 +217,17 @@ def post_works():
 
     if(checkHash(hash, cursor)):
         try:
-            for dataWork in data_JSON :
-                print(dataWork)
-                title = data_JSON["title"]
-                suport = dataWork["suport"]
-                date = dataWork["date"]
-                editor = dataWork["editor"]
-                place = dataWork["place"]
-                author = dataWork["author"]
-                language = dataWork["language"]
-                keywords = dataWork["keywords"]
-                description = dataWork["description"]
+            for item in data_JSON :
+                print(type(item))
+                title = item["title"]
+                suport = item["suport"]
+                date = item["date"]
+                editor = item["editor"]
+                place = item["place"]
+                author = item["author"]
+                language = item["language"]
+                keywords = item["keywords"]
+                description = item["description"]
                 cursor.execute("INSERT INTO work (title, suport, date, editor, place, author, language, keywords, description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (title, suport, int(date), editor, place, author, language, keywords, description))
                 mysql.connection.commit()
                 cursor.close()
