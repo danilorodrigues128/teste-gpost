@@ -215,18 +215,26 @@ def post_works():
         try:
             for item in data_JSON :
                 cursor = mysql.connection.cursor()
-                title = item["title"]
-                suport = item["suport"]
-                date = item["date"]
-                editor = item["editor"]
-                place = item["place"]
-                author = item["author"]
-                language = item["language"]
-                keywords = item["keywords"]
-                description = item["description"]
-                cursor.execute("INSERT INTO work (title, suport, date, editor, place, author, language, keywords, description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (title, suport, int(date), editor, place, author, language, keywords, description))
-                mysql.connection.commit()
-                cursor.close()
+
+                action = item["action"]
+                if action == "insert" or action == "update":
+                    title = item["title"]
+                    suport = item["suport"]
+                    date = item["date"]
+                    editor = item["editor"]
+                    place = item["place"]
+                    author = item["author"]
+                    language = item["language"]
+                    keywords = item["keywords"]
+                    description = item["description"]
+
+                    if (action == "insert") :
+                        cursor.execute("INSERT INTO work (title, suport, date, editor, place, author, language, keywords, description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (title, suport, int(date), editor, place, author, language, keywords, description))
+                    else :
+                        idWork = item["id"]
+                        cursor.execute("UPDATE work SET title = %s, suport = %s, date = %s, editor = %s, place = %s, author = %s, language = %s, keywords = %s, description = %s WHERE id = %s", (title, suport, int(date), editor, place, author, language, keywords, description, int(idWork)))
+                    mysql.connection.commit()
+                    cursor.close()
 
             vec_json = {
                 "status" : "Succeed",
