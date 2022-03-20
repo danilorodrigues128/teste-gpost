@@ -11,10 +11,12 @@
 # $env:FLASK_APP = "main"
 # flask run
 
+import json
 from flask import Flask, jsonify, request
 from flask_mysqldb import MySQL
 from flask_cors import CORS, cross_origin
 import random
+import traceback
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -25,6 +27,15 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'root'
 app.config['MYSQL_DB'] = 'mydb_v2'
 mysql = MySQL(app)
+
+'''
+# Path of MySQL Database (heroku)
+app.config['MYSQL_HOST'] = 'eu-cdbr-west-02.cleardb.net'
+app.config['MYSQL_USER'] = 'ba0cee386b45a4'
+app.config['MYSQL_PASSWORD'] = '2e6e7e7f'
+app.config['MYSQL_DB'] = 'heroku_c78f6c3eaaf5da1'
+mysql = MySQL(app)
+'''
 
 app.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -41,8 +52,37 @@ def index():
     return "Welcome !!"
 
 
-# API Functions
-#---[GET]---#
+## API Functions
+#
+#------------------------------[GET]------------------------------#
+
+@app.route("/get_user", methods=['GET'])
+@cross_origin()
+def get_user():
+    user = request.args.get('username')
+    password = request.args.get('password')
+
+    cursor = mysql.connection.cursor()
+
+    try:
+        flag = cursor.execute("SELECT * FROM users WHERE `username` = %s AND `password` = %s", (user, password))
+        data = cursor.fetchone()
+        mysql.connection.commit()
+
+        if(flag):
+            json = {
+                "status" : "Succeed",
+                "hash" : data[4],
+                "class" : "User"
+            }
+        else:
+            json = {
+                "status" : "Failed",
+                "error" : "Username or password incorrect!"
+            }
+            return jsonify(json)
+    except:
+        return traceback.print_exc() 
 
 @app.route("/get_blog", methods=['GET'])
 @cross_origin()
@@ -65,13 +105,47 @@ def get_pages():
 def get_works():
     pass
 
+
 #---[POST]---#
 
-@app.route("/post_blog", methods=['POST'])
+@app.route("/post_user", methods=['POST'])
 @cross_origin()
-def post_blog():
-    print(request.args.get("text"))
-    return jsonify(success=True)
+def post_user():
+
+    name = request.form['name']
+    username = request.form['username']
+    password = request.form['password']
+    
+    cursor = mysql.connection.cursor()
+
+    try:
+        # Check if have someone with this username
+        flag = cursor.execute("SELECT * FROM users WHERE `username` = %s", (username,))
+        mysql.connection.commit()
+
+        if flag:
+            json = {
+                "status" : "Failed",
+                "error" : "Username already in use..."
+            }
+            return jsonify(json)
+    except:
+        return traceback.print_exc()
+
+    try:
+        hash = generateHash()
+        cursor.execute("INSERT INTO users (name, username, password, hash) VALUES (%s, %s, %s, %s)", (name, username, password, hash))
+        mysql.connection.commit()
+
+        json = {
+            "status" : "Succeed",
+            "hash" : hash,
+            "message" : "User created with success..."
+        }
+
+        return jsonify(json)
+    except:
+        return traceback.print_exc()
 
 @app.route("/post_post")
 @cross_origin()
