@@ -100,7 +100,7 @@ def get_works():
         data = cursor.fetchall()
         mysql.connection.commit()
 
-        json = '['
+        vec_json = '['
 
         for row in range(len(data)):
             aux = {
@@ -116,13 +116,13 @@ def get_works():
                 "descriptions" : str(data[row][9])
             }
 
-            json += str(aux)
+            vec_json += str(aux)
 
             if not (row == len(data) - 1):
-                json += ','
+                vec_json += ','
         
-        json += ']'
-        return jsonify(json)
+        vec_json += ']'
+        return jsonify(json.loads(vec_json))
 
     except:
         return traceback.print_exc()
