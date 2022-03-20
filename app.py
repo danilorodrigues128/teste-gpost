@@ -206,9 +206,11 @@ def post_pages():
 @app.route("/post_works", methods=['POST'])
 @cross_origin()
 def post_works():
-
+    print('sssss') 
     data = request.form['data']
+    print('ggggggg') 
     data_JSON = json.loads(data)
+    print('jjjjjjjjjj') 
     print(type(data_JSON))
     print('zzzzzzz') 
     hash = request.headers['hash']
