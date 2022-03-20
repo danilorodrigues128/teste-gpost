@@ -210,7 +210,6 @@ def post_works():
 
     title = request.form['title']
     suport = request.form['suport']
-    date = request.form['date']
     editor = request.form['editor']
     place = request.form['place']
     author = request.form['author']
