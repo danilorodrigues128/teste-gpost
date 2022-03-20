@@ -209,6 +209,7 @@ def post_works():
 
     data = request.form['data']
     data_JSON = json.loads(data)
+    print(data_JSON)
 
     hash = request.headers['hash']
 
@@ -218,7 +219,7 @@ def post_works():
         try:
             for dataWork in data_JSON :
                 print(dataWork)
-                title = dataWork["title"]
+                title = data_JSON["title"]
                 suport = dataWork["suport"]
                 date = dataWork["date"]
                 editor = dataWork["editor"]
