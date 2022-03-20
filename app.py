@@ -11,7 +11,6 @@
 # $env:FLASK_APP = "main"
 # flask run
 
-from crypt import methods
 from flask import Flask, jsonify, request
 from flask_mysqldb import MySQL
 from flask_cors import CORS, cross_origin
