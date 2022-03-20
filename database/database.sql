@@ -1,89 +1,99 @@
 -- Command to create the database
 CREATE DATABASE `myDatabase` IF NOT EXISTS;
 
--- Command to create the rows table
-CREATE TABLE `rows`(
-    editable BOOLEAN NOT NULL DEFAULT 0,
+--USE `myDatabase`
+
+CREATE TABLE `user`(
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255),
-    last_update VARCHAR(50),
-    field VARCHAR(255),
-    creator VARCHAR(255),
-    preview VARCHAR(255),
-    creator_avatar VARCHAR(500),
-    dynamic_image BOOLEAN NOT NULL DEFAULT 0,
-    creator_id INT NOT NULL,
-    keywords VARCHAR(500),
-    questions INT,
-    uses INT,
-    description VARCHAR (2000),
+    username VARCHAR(255),
+    password VARCHAR(255),
+    hash VARCHAR(32),
 
     PRIMARY KEY(id)
 );
 
--- Command to create the columns table
-CREATE TABLE `columns`(
-    id VARCHAR(255),
-    label VARCHAR(255),
-    `default` BOOLEAN NOT NULL DEFAULT 0,
-    minWidth INT,
-    align VARCHAR(255),
-
-    PRIMARY KEY(id)
-);
-
--- Command to create the Users table
-CREATE TABLE `users`(
+CREATE TABLE `page`(
     id INT NOT NULL AUTO_INCREMENT,
-    username VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    firstName VARCHAR(255) NOT NULL,
-    lastName VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    description VARCHAR(5000),
-    joined INT NOT NULL,
-    avatar VARCHAR(500),
-    chips VARCHAR(2000),
-    favorites VARCHAR(500),
-    recents VARCHAR(500),
-    created VARCHAR(500),
-    admin BOOLEAN NOT NULL DEFAULT 0,
+    url VARCHAR(255),
+    title VARCHAR(100),
+    subtitle VARCHAR(100),
+    language CHAR(2),
+    urlImage VARCHAR(200),
 
     PRIMARY KEY(id)
 );
 
-CREATE TABLE `hash` (
-    user VARCHAR(255) NOT NULL,
-    hash VARCHAR(32) NOT NULL,
-
-    PRIMARY KEY(user)
+CREATE TABLE `pageTab` (
+    id INT NOT NULL AUTO_INCREMENT,
+    idPage INT NOT NULL,
+    title VARCHAR(100),
+    content TEXT,
+    
+    PRIMARY KEY(id)
 );
 
--- Command to create the Forms table
-CREATE TABLE `forms`(
-    formName VARCHAR(255) NOT NULL,
-    creator VARCHAR(255) NOT NULL,
-    content VARCHAR(21000) NOT NULL,
-    formID INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE `work`(
+    id INT NOT NULL AUTO_INCREMENT,
+    title VARCHAR(100),
+    suport VARCHAR(100),
+    date INT(4),
+    editor VARCHAR(100),
+    place VARCHAR(100),
+    author VARCHAR(100),
+    language VARCHAR(100),
+    keywords VARCHAR(200),
+    description VARCHAR(100),
 
-    PRIMARY KEY(FormID)
+    PRIMARY KEY(id)
 );
 
--- Command to create the Forms table
-CREATE TABLE `templates`(
-    template VARCHAR(21800),
-    formID INT NOT NULL,
+CREATE TABLE `arab`(
+    id INT NOT NULL AUTO_INCREMENT,
+    title VARCHAR(100),
+    suport VARCHAR(100),
+    date INT(4),
+    author VARCHAR(100),
+    language VARCHAR(100),
+    keywords VARCHAR(200),
+    description VARCHAR(100),
 
-    PRIMARY KEY(FormID)
+    PRIMARY KEY(id)
 );
 
+CREATE TABLE `team`(
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100),
+    content TEXT,
+    urlImage VARCHAR(200),
 
-CREATE TABLE `images`(
-    imageName VARCHAR(255) NOT NULL,
-    begin VARCHAR(500),
-    end VARCHAR(255),
-    image VARCHAR(21000) NOT NULL,
-    formID INT NOT NULL,
+    PRIMARY KEY(id)
+);
 
-    PRIMARY KEY(FormID)
+CREATE TABLE `log`(
+    id INT NOT NULL AUTO_INCREMENT,
+    url VARCHAR(255),
+    data DATETIME,
+    author VARCHAR(100),
+    showAuthor BOOLEAN DEFAULT 0,
+    title VARCHAR(100),
+    language CHAR(2),
+    urlImage VARCHAR(200),
+    content TEXT,
+
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE `blog`(
+    id INT NOT NULL AUTO_INCREMENT,
+    url VARCHAR(255),
+    data DATETIME,
+    author VARCHAR(100),
+    showAuthor BOOLEAN DEFAULT 0,
+    title VARCHAR(100),
+    language CHAR(2),
+    urlImage VARCHAR(200),
+    content TEXT,
+
+    PRIMARY KEY(id)
 );

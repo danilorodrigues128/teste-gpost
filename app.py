@@ -84,25 +84,53 @@ def get_user():
     except:
         return traceback.print_exc() 
 
+@app.route("/get_page")
+@cross_origin()
+def get_page():
+    pass
+
+@app.route("/get_works")
+@cross_origin()
+def get_works():
+    pass
+
+@app.route("/get_arab")
+@cross_origin()
+def get_arab():
+    pass
+
+@app.route("/get_team")
+@cross_origin()
+def get_team():
+    pass
+
+@app.route("/get_log")
+@cross_origin()
+def get_log():
+    pass
+
 @app.route("/get_blog", methods=['GET'])
 @cross_origin()
 def get_blog():
     global blog_post
     return jsonify(blog_post)
 
-@app.route("/get_post")
+@app.route("/get_user")
 @cross_origin()
-def get_post():
+def get_user():
     pass
 
-@app.route("/get_pages")
+
+#---[POST]---#
+
+@app.route("/post_page")
 @cross_origin()
-def get_pages():
+def post_page():
     pass
 
-@app.route("/get_works")
+@app.route("/post_works")
 @cross_origin()
-def get_works():
+def post_works():
     pass
 
 
@@ -147,20 +175,21 @@ def post_user():
     except:
         return traceback.print_exc()
 
-@app.route("/post_post")
+@app.route("/post_arab")
 @cross_origin()
-def post_post():
+def post_arab():
     pass
 
-@app.route("/post_pages")
+@app.route("/post_team")
 @cross_origin()
-def post_pages():
+def post_team():
     pass
 
-@app.route("/post_works")
+@app.route("/post_log")
 @cross_origin()
-def post_works():
+def post_log():
     pass
+
 
 # Looping Flask
 if __name__ == '__main__':
