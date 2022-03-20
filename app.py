@@ -96,7 +96,7 @@ def get_works():
     cursor = mysql.connection.cursor()
 
     try:
-        cursor.execute("SELECT * FROM work WHERE 1",)
+        cursor.execute("SELECT * FROM work WHERE 1")
         data = cursor.fetchall()
         mysql.connection.commit()
 
@@ -163,7 +163,7 @@ def post_user():
     
     cursor = mysql.connection.cursor()
 
-    if(checkHash(username, hash, cursor)):
+    if(checkHash(hash, cursor)):
         try:
             # Check if have someone with this username
             flag = cursor.execute("SELECT * FROM user WHERE `username` = %s", (username,))
@@ -199,17 +199,31 @@ def post_user():
             }
         return jsonify(json)
 
-@app.route("/post_arab")
+@app.route("/post_pages", methods=['POST'])
+@cross_origin()
+def post_pages():
+    pass
+
+@app.route("/post_works", methods=['POST'])
+@cross_origin()
+def post_works():
+
+
+
+
+    pass
+
+@app.route("/post_arab", methods=['POST'])
 @cross_origin()
 def post_arab():
     pass
 
-@app.route("/post_team")
+@app.route("/post_team", methods=['POST'])
 @cross_origin()
 def post_team():
     pass
 
-@app.route("/post_log")
+@app.route("/post_log", methods=['POST'])
 @cross_origin()
 def post_log():
     pass
@@ -228,19 +242,10 @@ def generateHash():
     hash = '%032x' % hash
     return hash
 
-def includeHash(user, hash, cursor):
-    try:
-        cursor.execute("INSERT INTO `hash` (user, hash) VALUES (%s, %s)", (user, hash))
-        mysql.connection.commit()
-        cursor.close()
-        return True
-    except:
-        return False
-
-def checkHash(user, hash, cursor):
+def checkHash(hash, cursor):
     try:
         # Check if have someone with this hash
-        flag = cursor.execute("SELECT * FROM `user` WHERE `username` = %s AND `hash` = %s", (user,hash))
+        flag = cursor.execute("SELECT * FROM `user` WHERE `hash` = %s", (hash))
         mysql.connection.commit()
 
         if flag:
