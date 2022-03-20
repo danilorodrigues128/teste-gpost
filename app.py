@@ -6,8 +6,14 @@
 # def home_view():
 #         return "<h1>Welcome to Geeks for Geeks</h1>"
 
+# Commands in PorwerShell (Windows)
+# venv\Script\activate
+# $env:FLASK_APP = "main"
+# flask run
+
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
+
 
 app = Flask(__name__)
 cors = CORS(app)
