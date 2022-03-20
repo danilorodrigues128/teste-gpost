@@ -235,7 +235,9 @@ def post_works():
                         cursor.execute("UPDATE work SET title = %s, suport = %s, date = %s, editor = %s, place = %s, author = %s, language = %s, keywords = %s, description = %s WHERE id = %s", (title, suport, int(date), editor, place, author, language, keywords, description, int(idWork)))
                     mysql.connection.commit()
                     cursor.close()
-
+                else :
+                    idWork = item["id"]
+                    cursor.execute("DELETE FROM work WHERE id = %s", (int(idWork), ))
             vec_json = {
                 "status" : "Succeed",
                 "message" : ""
