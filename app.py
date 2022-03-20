@@ -224,6 +224,7 @@ def post_works():
         try:
             print('ccccc')
             for item in data_JSON :
+                cursor = mysql.connection.cursor()
                 print('dddddd')
                 title = item["title"]
                 suport = item["suport"]
