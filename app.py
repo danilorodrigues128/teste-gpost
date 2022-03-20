@@ -344,7 +344,7 @@ def post_user():
             }
         return jsonify(json)
 
-@app.route("/post_pages", methods=['POST'])
+@app.route("/post_page", methods=['POST'])
 @cross_origin()
 def post_pages():
     #test
