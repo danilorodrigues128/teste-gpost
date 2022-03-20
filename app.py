@@ -209,7 +209,8 @@ def post_pages():
 def post_works():
 
     data = request.form['data']
-    print (data)
+    dataVector = json.loads(data)
+    print (dataVector)
 
     title = request.form['title']
     suport = request.form['suport']
