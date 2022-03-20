@@ -100,28 +100,26 @@ def get_works():
         data = cursor.fetchall()
         mysql.connection.commit()
 
-        vec_json = '['
+        vec_json = "["
 
         for row in range(len(data)):
-            aux = {
-                "id" : str(data[row][0]),
-                "title" : str(data[row][1]),
-                "suport" : str(data[row][2]),
-                "date" : str(data[row][3]),
-                "editor" : str(data[row][4]),
-                "place" : str(data[row][5]),
-                "author" : str(data[row][6]),
-                "language" : str(data[row][7]),
-                "keywords" : str(data[row][8]),
-                "descriptions" : str(data[row][9])
-            }
+            aux = '{"id" : '+ str(data[row][0]) + \
+                ', "title" : '+ str(data[row][1]) + \
+                    ', "suport" : '+ str(data[row][2]) + \
+                        ', "date" : '+ str(data[row][3]) + \
+                            ', "editor" : '+ str(data[row][4]) + \
+                                ', "place" : '+ str(data[row][5]) + \
+                                    ', "author" : '+ str(data[row][6]) + \
+                                        ', "language" : '+ str(data[row][7]) + \
+                                            ', "keywords" : '+ str(data[row][8]) + \
+                                                ', "descriptions" : '+ str(data[row][9]) + '}'
 
-            vec_json += str(aux)
+            vec_json += aux
 
             if not (row == len(data) - 1):
-                vec_json += ','
+                vec_json += ","
         
-        vec_json += ']'
+        vec_json += "]"
         print(vec_json)
         return jsonify(json.loads(vec_json))
 
