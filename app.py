@@ -20,7 +20,7 @@ import traceback
 
 app = Flask(__name__)
 cors = CORS(app)
-
+'''
 # Path of MySQL Database (localhost)
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
@@ -35,7 +35,7 @@ app.config['MYSQL_USER'] = 'ba0cee386b45a4'
 app.config['MYSQL_PASSWORD'] = '2e6e7e7f'
 app.config['MYSQL_DB'] = 'heroku_c78f6c3eaaf5da1'
 mysql = MySQL(app)
-'''
+
 
 app.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -115,10 +115,6 @@ def get_blog():
     global blog_post
     return jsonify(blog_post)
 
-@app.route("/get_user")
-@cross_origin()
-def get_user():
-    pass
 
 #---[POST]---#
 
