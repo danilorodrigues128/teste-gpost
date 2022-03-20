@@ -228,36 +228,36 @@ def get_team():
 def get_log():
     cursor = mysql.connection.cursor()
 
-    url = request.args.get("url")
-
     try:
-        flag = cursor.execute("SELECT * FROM log WHERE url = %s", url)
-        data = cursor.fetchone()
+        cursor.execute("SELECT * FROM arab WHERE 1")
+        data = cursor.fetchall()
         mysql.connection.commit()
 
-        if flag :
-            json_response = {
-                "id" : data[0],
-                "url" : data[1],
-                "data" : data[2],
-                "author" : data[3],
-                "show_author" : data[4],
-                "title" : data[5],
-                "language" : data[6],
-                "url_image" : data[7],
-                "text" : data[8]
-            }
-        else:
-            json_response = {
-                "status" : "Failed",
-                "error" : "Invalid url!"
-            }
+        vec_json = "["
+
+        for row in range(len(data)):
+            aux = '{"id" : "'+ str(data[row][0]) + \
+                '", "url" : "'+ str(data[row][1]) + \
+                    '", "data" : "'+ str(data[row][2]) + \
+                        '", "author" : "'+ str(data[row][3]) + \
+                            '", "showAuthor" : "'+ str(data[row][4]) + \
+                                '", "title" : "'+ str(data[row][5]) + \
+                                    '", "language" : "'+ str(data[row][6]) + \
+                                        '", "urlImage" : "'+ str(data[row][7]) + \
+                                            '", "content" : "'+ str(data[row][8]) + '"}'
+
+            vec_json += aux
+
+            if not (row == len(data) - 1):
+                vec_json += ","
         
-        return jsonify(json_response)
+        vec_json += "]"
+        #print(vec_json)
+        return jsonify(json.loads(vec_json))
+
     except:
         return traceback.print_exc()
     
-
 @app.route("/get_blog", methods=['GET'])
 @cross_origin()
 def get_blog():
@@ -447,7 +447,52 @@ def post_works():
 @app.route("/post_arab", methods=['POST'])
 @cross_origin()
 def post_arab():
-    pass
+    data = request.form['data']
+    data_JSON = json.loads(data)
+
+    hash = request.headers['hash']
+    
+    if(checkHash(hash)):
+        try:
+            for item in data_JSON :
+                cursor = mysql.connection.cursor()
+
+                action = item["action"]
+                if action == "insert" or action == "update":
+                    title = item["title"]
+                    suport = item["suport"]
+                    date = item["date"]
+                    author = item["author"]
+                    language = item["language"]
+                    keywords = item["keywords"]
+                    description = item["description"]
+
+                    if (action == "insert") :
+                        cursor.execute("INSERT INTO arab (title, suport, date, author, language, keywords, description) VALUES (%s, %s, %s, %s, %s, %s, %s)", (title, suport, int(date), author, language, keywords, description))
+                    else :
+                        idArab = item["id"]
+                        cursor.execute("UPDATE arab SET title = %s, suport = %s, date = %s, author = %s, language = %s, keywords = %s, description = %s WHERE id = %s", (title, suport, int(date), author, language, keywords, description, int(idArab)))
+                    mysql.connection.commit()
+                    cursor.close()
+                elif action == "delete":
+                    idArab = item["id"]
+                    cursor.execute("DELETE FROM arab WHERE id = %s", (int(idArab), ))
+                    mysql.connection.commit()
+                    cursor.close()
+
+            vec_json = {
+                "status" : "Succeed",
+                "message" : ""
+            }
+            return jsonify(vec_json)
+        except:
+            return traceback.print_exc()
+    else:
+        vec_json = {
+                "status" : "Failed",
+                "message" : "Invalid hash!"
+            }
+        return jsonify(vec_json)
 
 @app.route("/post_team", methods=['POST'])
 @cross_origin()
