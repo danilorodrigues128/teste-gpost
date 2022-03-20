@@ -84,10 +84,40 @@ def get_user():
     except:
         return traceback.print_exc()
 
-@app.route("/get_page")
+@app.route("/get_page", methods=['GET'])
 @cross_origin()
 def get_page():
-    pass
+    
+    cursor = mysql.connection.cursor()
+
+    try:
+        cursor.execute("SELECT * FROM page WHERE 1")
+        data = cursor.fetchall()
+        mysql.connection.commit()
+
+        vec_json = "["
+
+        for row in range(len(data)):
+            aux = '{"id" : "'+ str(data[row][0]) + \
+                '", "url" : "'+ str(data[row][1]) + \
+                    '", "title" : "'+ str(data[row][2]) + \
+                        '", "subtitle" : "'+ str(data[row][3]) + \
+                            '", "language" : "'+ str(data[row][4]) + \
+                                '", "urlImage" : "'+ str(data[row][5]) + '"}'
+
+            vec_json += aux
+
+            if not (row == len(data) - 1):
+                vec_json += ","
+        
+        vec_json += "]"
+        #print(vec_json)
+        return jsonify(json.loads(vec_json))
+
+    except:
+        return traceback.print_exc()
+
+
 
 @app.route("/get_works", methods=['GET'])
 @cross_origin()
@@ -120,7 +150,7 @@ def get_works():
                 vec_json += ","
         
         vec_json += "]"
-        print(vec_json)
+        #print(vec_json)
         return jsonify(json.loads(vec_json))
 
     except:
