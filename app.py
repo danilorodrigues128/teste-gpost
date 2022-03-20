@@ -65,7 +65,7 @@ def get_user():
     cursor = mysql.connection.cursor()
 
     try:
-        flag = cursor.execute("SELECT * FROM users WHERE `username` = %s AND `password` = %s", (user, password))
+        flag = cursor.execute("SELECT * FROM user WHERE `username` = %s AND `password` = %s", (user, password))
         data = cursor.fetchone()
         mysql.connection.commit()
 
@@ -120,20 +120,6 @@ def get_blog():
 def get_user():
     pass
 
-
-#---[POST]---#
-
-@app.route("/post_page")
-@cross_origin()
-def post_page():
-    pass
-
-@app.route("/post_works")
-@cross_origin()
-def post_works():
-    pass
-
-
 #---[POST]---#
 
 @app.route("/post_user", methods=['POST'])
@@ -148,7 +134,7 @@ def post_user():
 
     try:
         # Check if have someone with this username
-        flag = cursor.execute("SELECT * FROM users WHERE `username` = %s", (username,))
+        flag = cursor.execute("SELECT * FROM user WHERE `username` = %s", (username,))
         mysql.connection.commit()
 
         if flag:
@@ -162,7 +148,7 @@ def post_user():
 
     try:
         hash = generateHash()
-        cursor.execute("INSERT INTO users (name, username, password, hash) VALUES (%s, %s, %s, %s)", (name, username, password, hash))
+        cursor.execute("INSERT INTO user (name, username, password, hash) VALUES (%s, %s, %s, %s)", (name, username, password, hash))
         mysql.connection.commit()
 
         json = {
