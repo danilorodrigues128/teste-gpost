@@ -112,7 +112,7 @@ def get_works():
                                     '", "author" : "'+ str(data[row][6]) + \
                                         '", "language" : "'+ str(data[row][7]) + \
                                             '", "keywords" : "'+ str(data[row][8]) + \
-                                                '", "descriptions" : "'+ str(data[row][9]) + '}'
+                                                '", "descriptions" : "'+ str(data[row][9]) + '"}'
 
             vec_json += aux
 
