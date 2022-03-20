@@ -74,7 +74,6 @@ def get_user():
             json = {
                 "status" : "Succeed",
                 "hash" : data[4],
-                "class" : "User"
             }
         else:
             json = {
@@ -83,17 +82,51 @@ def get_user():
             }
         return jsonify(json)
     except:
-        return traceback.print_exc() 
+        return traceback.print_exc()
 
 @app.route("/get_page")
 @cross_origin()
 def get_page():
     pass
 
-@app.route("/get_works")
+@app.route("/get_works", methods=['GET'])
 @cross_origin()
 def get_works():
-    pass
+    
+    cursor = mysql.connection.cursor()
+
+    try:
+        cursor.execute("SELECT * FROM work WHERE 1",)
+        data = cursor.fetchall()
+        mysql.connection.commit()
+
+        json = '['
+
+        for row in range(len(data)):
+            aux = {
+                "id" : str(data[row][0]),
+                "title" : str(data[row][1]),
+                "suport" : str(data[row][2]),
+                "date" : str(data[row][3]),
+                "editor" : str(data[row][4]),
+                "place" : str(data[row][5]),
+                "author" : str(data[row][6]),
+                "language" : str(data[row][7]),
+                "keywords" : str(data[row][8]),
+                "descriptions" : str(data[row][9])
+            }
+
+            json += str(aux)
+
+            if not (row == len(data) - 1):
+                json += ','
+        
+        json += ']'
+        return jsonify(json)
+
+    except:
+        return traceback.print_exc()
+
 
 @app.route("/get_arab")
 @cross_origin()
@@ -126,37 +159,45 @@ def post_user():
     name = request.form['name']
     username = request.form['username']
     password = request.form['password']
+    hash = request.headers['hash']
     
     cursor = mysql.connection.cursor()
 
-    try:
-        # Check if have someone with this username
-        flag = cursor.execute("SELECT * FROM user WHERE `username` = %s", (username,))
-        mysql.connection.commit()
+    if(checkHash(username, hash, cursor)):
+        try:
+            # Check if have someone with this username
+            flag = cursor.execute("SELECT * FROM user WHERE `username` = %s", (username,))
+            mysql.connection.commit()
 
-        if flag:
+            if flag:
+                json = {
+                    "status" : "Failed",
+                    "error" : "Username already in use..."
+                }
+                return jsonify(json)
+        except:
+            return traceback.print_exc()
+
+        try:
+            hash = generateHash()
+            cursor.execute("INSERT INTO user (name, username, password, hash) VALUES (%s, %s, %s, %s)", (name, username, password, hash))
+            mysql.connection.commit()
+
             json = {
-                "status" : "Failed",
-                "error" : "Username already in use..."
+                "status" : "Succeed",
+                "hash" : hash,
+                "message" : "User created with success..."
             }
+
             return jsonify(json)
-    except:
-        return traceback.print_exc()
-
-    try:
-        hash = generateHash()
-        cursor.execute("INSERT INTO user (name, username, password, hash) VALUES (%s, %s, %s, %s)", (name, username, password, hash))
-        mysql.connection.commit()
-
+        except:
+            return traceback.print_exc()
+    else:
         json = {
-            "status" : "Succeed",
-            "hash" : hash,
-            "message" : "User created with success..."
-        }
-
+                "status" : "Failed",
+                "message" : "Invalid hash!"
+            }
         return jsonify(json)
-    except:
-        return traceback.print_exc()
 
 @app.route("/post_arab")
 @cross_origin()
@@ -199,7 +240,7 @@ def includeHash(user, hash, cursor):
 def checkHash(user, hash, cursor):
     try:
         # Check if have someone with this hash
-        flag = cursor.execute("SELECT * FROM `hash` WHERE `user` = %s AND `hash` = %s", (user,hash))
+        flag = cursor.execute("SELECT * FROM `user` WHERE `username` = %s AND `hash` = %s", (user,hash))
         mysql.connection.commit()
 
         if flag:
@@ -207,4 +248,4 @@ def checkHash(user, hash, cursor):
         else: 
             return False
     except:
-        return "error"
+        return traceback.print_exc()
