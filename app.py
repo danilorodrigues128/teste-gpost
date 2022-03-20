@@ -258,7 +258,6 @@ def get_log():
     except:
         return traceback.print_exc()
     
-
 @app.route("/get_blog", methods=['GET'])
 @cross_origin()
 def get_blog():
@@ -406,7 +405,52 @@ def post_works():
 @app.route("/post_arab", methods=['POST'])
 @cross_origin()
 def post_arab():
-    pass
+    data = request.form['data']
+    data_JSON = json.loads(data)
+
+    hash = request.headers['hash']
+    
+    if(checkHash(hash)):
+        try:
+            for item in data_JSON :
+                cursor = mysql.connection.cursor()
+
+                action = item["action"]
+                if action == "insert" or action == "update":
+                    title = item["title"]
+                    suport = item["suport"]
+                    date = item["date"]
+                    author = item["author"]
+                    language = item["language"]
+                    keywords = item["keywords"]
+                    description = item["description"]
+
+                    if (action == "insert") :
+                        cursor.execute("INSERT INTO arab (title, suport, date, author, language, keywords, description) VALUES (%s, %s, %s, %s, %s, %s, %s)", (title, suport, int(date), author, language, keywords, description))
+                    else :
+                        idArab = item["id"]
+                        cursor.execute("UPDATE arab SET title = %s, suport = %s, date = %s, author = %s, language = %s, keywords = %s, description = %s WHERE id = %s", (title, suport, int(date), author, language, keywords, description, int(idArab)))
+                    mysql.connection.commit()
+                    cursor.close()
+                elif action == "delete":
+                    idArab = item["id"]
+                    cursor.execute("DELETE FROM arab WHERE id = %s", (int(idArab), ))
+                    mysql.connection.commit()
+                    cursor.close()
+
+            vec_json = {
+                "status" : "Succeed",
+                "message" : ""
+            }
+            return jsonify(vec_json)
+        except:
+            return traceback.print_exc()
+    else:
+        vec_json = {
+                "status" : "Failed",
+                "message" : "Invalid hash!"
+            }
+        return jsonify(vec_json)
 
 @app.route("/post_team", methods=['POST'])
 @cross_origin()
