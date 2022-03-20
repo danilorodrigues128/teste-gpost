@@ -217,8 +217,9 @@ def post_works():
 
     if(checkHash(hash, cursor)):
         try:
+            print('aaaaaa')
             for item in data_JSON :
-                print(type(item))
+                # print(type(item))
                 title = item["title"]
                 suport = item["suport"]
                 date = item["date"]
