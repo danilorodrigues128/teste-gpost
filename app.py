@@ -209,7 +209,8 @@ def post_pages():
 def post_works():
 
     data = request.form['data']
-    print (data)
+    data_JSON = json.loads(data)
+    print (data_JSON)
 
     title = request.form['title']
     suport = request.form['suport']
@@ -231,19 +232,19 @@ def post_works():
             mysql.connection.commit()
             cursor.close()
 
-            json = {
+            vec_json = {
                 "status" : "Succeed",
                 "message" : ""
             }
-            return jsonify(json)
+            return jsonify(vec_json)
         except:
             return traceback.print_exc()
     else:
-        json = {
+        vec_json = {
                 "status" : "Failed",
                 "message" : "Invalid hash!"
             }
-        return jsonify(json)
+        return jsonify(vec_json)
 
 @app.route("/post_arab", methods=['POST'])
 @cross_origin()
