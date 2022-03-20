@@ -224,7 +224,8 @@ def post_works():
 
     if(checkHash(hash, cursor)):
         try:
-            cursor.execute("INSERT INTO work (title, suport, date, editor, place, author, language, keywords, description) VALUES (%s, %s, %d, %s, %s, %s, %s, %s, %s)", (title, suport, date, editor, place, author, language, keywords, description))
+            cursor.execute("INSERT INTO work (title, suport, date, editor, place, author, language, keywords, description) VALUES (%s, %s, %d, %s, %s, %s, %s, %s, %s)", (title, suport, int(date), editor, place, author, language, keywords, description))
+            print("INSERT INTO work (title, suport, date, editor, place, author, language, keywords, description) VALUES (%s, %s, %d, %s, %s, %s, %s, %s, %s)", (title, suport, int(date), editor, place, author, language, keywords, description))
             mysql.connection.commit()
 
             json = {
