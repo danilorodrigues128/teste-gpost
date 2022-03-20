@@ -11,6 +11,8 @@
 # $env:FLASK_APP = "main"
 # flask run
 
+#teste massa
+
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 
