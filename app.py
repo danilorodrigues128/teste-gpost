@@ -214,12 +214,13 @@ def post_works():
     hash = request.headers['hash']
 
     cursor = mysql.connection.cursor()
-
+    print('aaaaaa') 
     if(checkHash(hash, cursor)):
+        print('bbbb')
         try:
-            print('aaaaaa')
+            print('ccccc')
             for item in data_JSON :
-                # print(type(item))
+                print('dddddd')
                 title = item["title"]
                 suport = item["suport"]
                 date = item["date"]
