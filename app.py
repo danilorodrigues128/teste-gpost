@@ -210,6 +210,7 @@ def post_works():
     data = request.form['data']
     print('ggggggg') 
     print(type(data))
+    print(data)
     data_JSON = json.loads(data)
     print('jjjjjjjjjj') 
     print(type(data_JSON))
