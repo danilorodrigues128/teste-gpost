@@ -162,7 +162,7 @@ def post_user():
     
     cursor = mysql.connection.cursor()
 
-    if(checkHash(hash, cursor)):
+    if(checkHash(hash)):
         try:
             # Check if have someone with this username
             flag = cursor.execute("SELECT * FROM user WHERE `username` = %s", (username,))
@@ -211,7 +211,7 @@ def post_works():
 
     hash = request.headers['hash']
     
-    if(checkHash(hash, cursor)):
+    if(checkHash(hash)):
         try:
             for item in data_JSON :
                 cursor = mysql.connection.cursor()
@@ -279,9 +279,10 @@ def generateHash():
     hash = '%032x' % hash
     return hash
 
-def checkHash(hash, cursor):
+def checkHash(hash):
     try:
         # Check if have someone with this hash
+        cursor = mysql.connection.cursor()
         flag = cursor.execute("SELECT * FROM `user` WHERE `hash` = %s", (hash,))
         mysql.connection.commit()
 
