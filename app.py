@@ -122,6 +122,7 @@ def get_works():
                 vec_json += ','
         
         vec_json += ']'
+        print(vec_json)
         return jsonify(json.loads(vec_json))
 
     except:
@@ -210,7 +211,7 @@ def post_works():
 
     data = request.form['data']
     data_JSON = json.loads(data)
-    print (data_JSON)
+    print (data_JSON[0])
 
     title = request.form['title']
     suport = request.form['suport']
