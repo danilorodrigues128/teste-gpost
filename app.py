@@ -232,7 +232,7 @@ def get_log():
     cursor = mysql.connection.cursor()
 
     try:
-        cursor.execute("SELECT * FROM arab WHERE 1")
+        cursor.execute("SELECT * FROM log WHERE 1")
         data = cursor.fetchall()
         mysql.connection.commit()
 
@@ -241,7 +241,7 @@ def get_log():
         for row in range(len(data)):
             aux = '{"id" : "'+ str(data[row][0]) + \
                 '", "url" : "'+ str(data[row][1]) + \
-                    '", "data" : "'+ str(data[row][2]) + \
+                    '", "date" : "'+ str(data[row][2]) + \
                         '", "author" : "'+ str(data[row][3]) + \
                             '", "showAuthor" : "'+ str(data[row][4]) + \
                                 '", "title" : "'+ str(data[row][5]) + \
