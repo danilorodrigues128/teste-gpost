@@ -348,6 +348,7 @@ def post_user():
 @app.route("/post_pages", methods=['POST'])
 @cross_origin()
 def post_pages():
+    #test
     data = request.form['data']
     data_JSON = json.loads(data)
 
