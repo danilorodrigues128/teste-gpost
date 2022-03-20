@@ -348,7 +348,48 @@ def post_user():
 @app.route("/post_pages", methods=['POST'])
 @cross_origin()
 def post_pages():
-    pass
+    data = request.form['data']
+    data_JSON = json.loads(data)
+
+    hash = request.headers['hash']
+    
+    if(checkHash(hash)):
+        try:
+            for item in data_JSON :
+                cursor = mysql.connection.cursor()
+
+                action = item["action"]
+                if action == "insert" or action == "update":
+                    title = item["title"]
+                    content = item["content"]
+
+                    if action == "insert":
+                        idpage = item["idPage"]
+                        cursor.execute("INSERT INTO pageTab(idPage, title, content) VALUES (%s, %s, %s)", (int(idpage), title, content))
+                    elif action == "update":
+                        idTabpage = item["id"]
+                        cursor.execute("UPDATE pageTab SET title = %s, content = %s WHERE id = %s", (title, content, int(idTabpage)))
+                    
+                elif action == "delete":
+                    idTabpage = item["id"]
+                    cursor.execute("DELETE FROM pageTab WHERE id = %s", (int(idTabpage), ))
+
+                mysql.connection.commit()
+                cursor.close()
+
+            vec_json = {
+                "status" : "Succeed",
+                "message" : ""
+            }
+            return jsonify(vec_json)
+        except:
+            return traceback.print_exc()
+    else:
+        vec_json = {
+                "status" : "Failed",
+                "message" : "Invalid hash!"
+            }
+        return jsonify(vec_json)
 
 @app.route("/post_works", methods=['POST'])
 @cross_origin()
