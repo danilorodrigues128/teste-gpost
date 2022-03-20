@@ -91,9 +91,10 @@ def get_user():
 def get_page():
     
     cursor = mysql.connection.cursor()
+    urlPage = request.args.get('url')
 
     try:
-        cursor.execute("SELECT * FROM page WHERE 1")
+        cursor.execute("SELECT * FROM page p, pagetab pt WHERE p.id = pt.idPage AND url = %s", (urlPage,))
         data = cursor.fetchall()
         mysql.connection.commit()
 
@@ -105,7 +106,10 @@ def get_page():
                     '", "title" : "'+ str(data[row][2]) + \
                         '", "subtitle" : "'+ str(data[row][3]) + \
                             '", "language" : "'+ str(data[row][4]) + \
-                                '", "urlImage" : "'+ str(data[row][5]) + '"}'
+                                '", "urlImage" : "'+ str(data[row][5]) + \
+                                    '", "idTab" : "'+ str(data[row][6]) + \
+                                        '", "titleTab" : "'+ str(data[row][8]) + \
+                                            '", "contentTab" : "'+ str(data[row][9]) + '"}'
 
             vec_json += aux
 
@@ -113,7 +117,6 @@ def get_page():
                 vec_json += ","
         
         vec_json += "]"
-        #print(vec_json)
         return jsonify(json.loads(vec_json))
 
     except:
