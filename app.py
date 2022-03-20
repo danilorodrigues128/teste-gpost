@@ -208,10 +208,38 @@ def post_pages():
 @cross_origin()
 def post_works():
 
+    title = request.form['title']
+    suport = request.form['suport']
+    date = request.form['date']
+    editor = request.form['editor']
+    place = request.form['place']
+    author = request.form['author']
+    language = request.form['language']
+    keywords = request.form['keywords']
+    description = request.form['description']
 
+    hash = request.headers['hash']
+    
+    cursor = mysql.connection.cursor()
 
+    if(checkHash(hash, cursor)):
+        try:
+            cursor.execute("INSERT INTO work (title, suport, date, editor, place, author, language, keywords, description)  VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (title, suport, date, editor, place, author, language, keywords, description))
+            mysql.connection.commit()
 
-    pass
+            json = {
+                "status" : "Succeed",
+                "message" : ""
+            }
+            return jsonify(json)
+        except:
+            return traceback.print_exc()
+    else:
+        json = {
+                "status" : "Failed",
+                "message" : "Invalid hash!"
+            }
+        return jsonify(json)
 
 @app.route("/post_arab", methods=['POST'])
 @cross_origin()
@@ -245,7 +273,7 @@ def generateHash():
 def checkHash(hash, cursor):
     try:
         # Check if have someone with this hash
-        flag = cursor.execute("SELECT * FROM `user` WHERE `hash` = %s", (hash))
+        flag = cursor.execute("SELECT * FROM `user` WHERE `hash` = %s", (hash,))
         mysql.connection.commit()
 
         if flag:
