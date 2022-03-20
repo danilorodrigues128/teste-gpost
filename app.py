@@ -216,6 +216,7 @@ def post_works():
 
     if(checkHash(hash, cursor)):
         try:
+            print(data[0])
             for dataWork in data_JSON :
                 title = dataWork['title']
                 suport = dataWork['suport']
@@ -226,7 +227,6 @@ def post_works():
                 language = dataWork['language']
                 keywords = dataWork['keywords']
                 description = dataWork['description']
-                print(dataWork['description'])
                 cursor.execute("INSERT INTO work (title, suport, date, editor, place, author, language, keywords, description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (title, suport, int(date), editor, place, author, language, keywords, description))
                 mysql.connection.commit()
                 cursor.close()
