@@ -73,7 +73,7 @@ CREATE TABLE `team`(
 CREATE TABLE `log`(
     id INT NOT NULL AUTO_INCREMENT,
     url VARCHAR(255),
-    data DATETIME,
+    date DATETIME,
     author VARCHAR(100),
     showAuthor BOOLEAN DEFAULT 0,
     title VARCHAR(100),
