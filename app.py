@@ -206,26 +206,15 @@ def post_pages():
 @app.route("/post_works", methods=['POST'])
 @cross_origin()
 def post_works():
-    print('sssss') 
     data = request.form['data']
-    print('ggggggg') 
-    print(type(data))
-    print(data)
     data_JSON = json.loads(data)
-    print('jjjjjjjjjj') 
-    print(type(data_JSON))
-    print('zzzzzzz') 
+
     hash = request.headers['hash']
-    print('xxxxxx') 
-    cursor = mysql.connection.cursor()
-    print('aaaaaa') 
+    
     if(checkHash(hash, cursor)):
-        print('bbbb')
         try:
-            print('ccccc')
             for item in data_JSON :
                 cursor = mysql.connection.cursor()
-                print('dddddd')
                 title = item["title"]
                 suport = item["suport"]
                 date = item["date"]
