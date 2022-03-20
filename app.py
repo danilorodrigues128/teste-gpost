@@ -507,7 +507,6 @@ def post_team():
     if(checkHash(hash)):
 
         try:
-            hash = generateHash()
             cursor.execute("INSERT INTO team (name, content, urlImage) VALUES (%s, %s, %s)", (name, content, urlImage))
             mysql.connection.commit()
 
@@ -529,7 +528,39 @@ def post_team():
 @app.route("/post_log", methods=['POST'])
 @cross_origin()
 def post_log():
-    pass
+    url = request.form['url']
+    date = request.form['data']
+    author = request.form['author']
+    showAuthor = request.form['showAuthor']
+    title = request.form['title']
+    language = request.form['language']
+    urlImage = request.form['urlImage']
+    content = request.form['content']
+    
+    hash = request.headers['hash']
+    
+    cursor = mysql.connection.cursor()
+
+    if(checkHash(hash)):
+
+        try:
+            cursor.execute("INSERT INTO log (url, date, author, showAuthor, title, language, urlImage, content) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (url, date, author, showAuthor, title, language, urlImage, content))
+            mysql.connection.commit()
+
+            json = {
+                "status" : "Succeed",
+                "message" : "Log created with success..."
+            }
+
+            return jsonify(json)
+        except:
+            return traceback.print_exc()
+    else:
+        json = {
+                "status" : "Failed",
+                "message" : "Invalid hash!"
+            }
+        return jsonify(json)
 
 
 # Looping Flask
