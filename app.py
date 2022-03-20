@@ -531,22 +531,21 @@ def post_team():
 @app.route("/post_log", methods=['POST'])
 @cross_origin()
 def post_log():
-    url = request.form['url']
-    date = request.form['data']
-    author = request.form['author']
-    showAuthor = request.form['showAuthor']
-    title = request.form['title']
-    language = request.form['language']
-    urlImage = request.form['urlImage']
-    content = request.form['content']
     
     hash = request.headers['hash']
     
     cursor = mysql.connection.cursor()
 
     if(checkHash(hash)):
-
         try:
+            url = request.form['url']
+            date = request.form['date']
+            author = request.form['author']
+            showAuthor = request.form['showAuthor']
+            title = request.form['title']
+            language = request.form['language']
+            urlImage = request.form['urlImage']
+            content = request.form['content']
             cursor.execute("INSERT INTO log (url, date, author, showAuthor, title, language, urlImage, content) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (url, date, author, showAuthor, title, language, urlImage, content))
             mysql.connection.commit()
 
