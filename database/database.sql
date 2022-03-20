@@ -43,7 +43,7 @@ CREATE TABLE `work`(
     author VARCHAR(100),
     language VARCHAR(100),
     keywords VARCHAR(200),
-    description VARCHAR(100),
+    description text,
 
     PRIMARY KEY(id)
 );
