@@ -230,10 +230,10 @@ def post_works():
                 mysql.connection.commit()
                 cursor.close()
 
-                vec_json = {
-                    "status" : "Succeed",
-                    "message" : ""
-                }
+            vec_json = {
+                "status" : "Succeed",
+                "message" : ""
+            }
             return jsonify(vec_json)
         except:
             return traceback.print_exc()
