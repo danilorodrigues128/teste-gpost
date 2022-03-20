@@ -216,7 +216,7 @@ def post_works():
 
     if(checkHash(hash, cursor)):
         try:
-            print(data[0])
+            print(type(data_JSON[0]))
             for dataWork in data_JSON :
                 title = dataWork['title']
                 suport = dataWork['suport']
