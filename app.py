@@ -210,9 +210,9 @@ def post_works():
     data = request.form['data']
     data_JSON = json.loads(data)
     print(type(data_JSON))
-
+    print('zzzzzzz') 
     hash = request.headers['hash']
-
+    print('xxxxxx') 
     cursor = mysql.connection.cursor()
     print('aaaaaa') 
     if(checkHash(hash, cursor)):
