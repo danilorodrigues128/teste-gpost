@@ -123,7 +123,6 @@ def get_page():
         return traceback.print_exc()
 
 
-
 @app.route("/get_works", methods=['GET'])
 @cross_origin()
 def get_works():
@@ -226,13 +225,13 @@ def get_team():
     except:
         return traceback.print_exc()
 
-@app.route("/get_blog", methods=['GET'])
+@app.route("/get_log")
 @cross_origin()
-def get_blog():
+def get_log():
     cursor = mysql.connection.cursor()
 
     try:
-        cursor.execute("SELECT * FROM blog WHERE 1")
+        cursor.execute("SELECT * FROM log WHERE 1")
         data = cursor.fetchall()
         mysql.connection.commit()
 
@@ -241,7 +240,7 @@ def get_blog():
         for row in range(len(data)):
             aux = '{"id" : "'+ str(data[row][0]) + \
                 '", "url" : "'+ str(data[row][1]) + \
-                    '", "data" : "'+ str(data[row][2]) + \
+                    '", "date" : "'+ str(data[row][2]) + \
                         '", "author" : "'+ str(data[row][3]) + \
                             '", "showAuthor" : "'+ str(data[row][4]) + \
                                 '", "title" : "'+ str(data[row][5]) + \
@@ -260,7 +259,7 @@ def get_blog():
 
     except:
         return traceback.print_exc()
-
+    
 
 #-----------------------------------------------------------------------------------------------------------#
 #-------------------------------------------------[POST]----------------------------------------------------#
@@ -439,7 +438,6 @@ def post_arab():
                     else :
                         idArab = item["id"]
                         cursor.execute("UPDATE arab SET title = %s, suport = %s, date = %s, author = %s, language = %s, keywords = %s, description = %s WHERE id = %s", (title, suport, int(date), author, language, keywords, description, int(idArab)))
-                    
                     mysql.connection.commit()
                     cursor.close()
                 elif action == "delete":
