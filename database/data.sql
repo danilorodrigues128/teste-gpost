@@ -13,3 +13,6 @@ SELECT * FROM page;
 SELECT * FROM pagetab;
 
 SELECT * FROM page p, pagetab pt WHERE p.id = pt.idPage AND url = "postel";
+
+
+INSERT INTO 

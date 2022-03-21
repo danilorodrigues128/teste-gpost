@@ -226,41 +226,6 @@ def get_team():
     except:
         return traceback.print_exc()
 
-@app.route("/get_log")
-@cross_origin()
-def get_log():
-    cursor = mysql.connection.cursor()
-
-    try:
-        cursor.execute("SELECT * FROM log WHERE 1")
-        data = cursor.fetchall()
-        mysql.connection.commit()
-
-        vec_json = "["
-
-        for row in range(len(data)):
-            aux = '{"id" : "'+ str(data[row][0]) + \
-                '", "url" : "'+ str(data[row][1]) + \
-                    '", "date" : "'+ str(data[row][2]) + \
-                        '", "author" : "'+ str(data[row][3]) + \
-                            '", "showAuthor" : "'+ str(data[row][4]) + \
-                                '", "title" : "'+ str(data[row][5]) + \
-                                    '", "language" : "'+ str(data[row][6]) + \
-                                        '", "urlImage" : "'+ str(data[row][7]) + \
-                                            '", "content" : "'+ str(data[row][8]) + '"}'
-
-            vec_json += aux
-
-            if not (row == len(data) - 1):
-                vec_json += ","
-        
-        vec_json += "]"
-        #print(vec_json)
-        return jsonify(json.loads(vec_json))
-
-    except:
-        return traceback.print_exc()
-    
 @app.route("/get_blog", methods=['GET'])
 @cross_origin()
 def get_blog():
@@ -474,6 +439,7 @@ def post_arab():
                     else :
                         idArab = item["id"]
                         cursor.execute("UPDATE arab SET title = %s, suport = %s, date = %s, author = %s, language = %s, keywords = %s, description = %s WHERE id = %s", (title, suport, int(date), author, language, keywords, description, int(idArab)))
+                    
                     mysql.connection.commit()
                     cursor.close()
                 elif action == "delete":
