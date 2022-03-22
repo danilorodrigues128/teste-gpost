@@ -8,7 +8,7 @@ CREATE TABLE `user`(
     name VARCHAR(255),
     username VARCHAR(255),
     password VARCHAR(255),
-    hash VARCHAR(32),
+    hash CHAR(32),
 
     PRIMARY KEY(id)
 );
@@ -16,10 +16,10 @@ CREATE TABLE `user`(
 CREATE TABLE `page`(
     id INT NOT NULL AUTO_INCREMENT,
     url VARCHAR(255),
-    title VARCHAR(100),
-    subtitle VARCHAR(100),
+    title VARCHAR(255),
+    subtitle VARCHAR(255),
     language CHAR(2),
-    urlImage VARCHAR(200),
+    urlImage VARCHAR(255),
 
     PRIMARY KEY(id)
 );
@@ -27,7 +27,7 @@ CREATE TABLE `page`(
 CREATE TABLE `pageTab` (
     id INT NOT NULL AUTO_INCREMENT,
     idPage INT NOT NULL,
-    title VARCHAR(100),
+    title VARCHAR(255),
     content TEXT,
     
     PRIMARY KEY(id)
@@ -35,14 +35,14 @@ CREATE TABLE `pageTab` (
 
 CREATE TABLE `work`(
     id INT NOT NULL AUTO_INCREMENT,
-    title VARCHAR(100),
-    suport VARCHAR(100),
+    title VARCHAR(255),
+    suport VARCHAR(255),
     date INT(4),
-    editor VARCHAR(100),
-    place VARCHAR(100),
-    author VARCHAR(100),
-    language VARCHAR(100),
-    keywords VARCHAR(200),
+    editor VARCHAR(255),
+    place VARCHAR(255),
+    author VARCHAR(255),
+    language VARCHAR(255),
+    keywords VARCHAR(255),
     description text,
 
     PRIMARY KEY(id)
@@ -50,22 +50,22 @@ CREATE TABLE `work`(
 
 CREATE TABLE `arab`(
     id INT NOT NULL AUTO_INCREMENT,
-    title VARCHAR(100),
-    suport VARCHAR(100),
+    title VARCHAR(255),
+    suport VARCHAR(255),
     date INT(4),
-    author VARCHAR(100),
-    language VARCHAR(100),
-    keywords VARCHAR(200),
-    description VARCHAR(100),
+    author VARCHAR(255),
+    language VARCHAR(255),
+    keywords VARCHAR(255),
+    description VARCHAR(255),
 
     PRIMARY KEY(id)
 );
 
 CREATE TABLE `team`(
     id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(100),
+    name VARCHAR(255),
     content TEXT,
-    urlImage VARCHAR(200),
+    urlImage VARCHAR(255),
 
     PRIMARY KEY(id)
 );
@@ -74,11 +74,11 @@ CREATE TABLE `log`(
     id INT NOT NULL AUTO_INCREMENT,
     url VARCHAR(255),
     date DATETIME,
-    author VARCHAR(100),
+    author VARCHAR(255),
     showAuthor BOOLEAN DEFAULT 0,
-    title VARCHAR(100),
+    title VARCHAR(255),
     language CHAR(2),
-    urlImage VARCHAR(200),
+    urlImage VARCHAR(255),
     content TEXT,
 
     PRIMARY KEY(id)
@@ -88,11 +88,11 @@ CREATE TABLE `blog`(
     id INT NOT NULL AUTO_INCREMENT,
     url VARCHAR(255),
     data DATETIME,
-    author VARCHAR(100),
+    author VARCHAR(255),
     showAuthor BOOLEAN DEFAULT 0,
-    title VARCHAR(100),
+    title VARCHAR(255),
     language CHAR(2),
-    urlImage VARCHAR(200),
+    urlImage VARCHAR(255),
     content TEXT,
 
     PRIMARY KEY(id)

@@ -14,5 +14,5 @@ SELECT * FROM pagetab;
 
 SELECT * FROM page p, pagetab pt WHERE p.id = pt.idPage AND url = "postel";
 
+SELECT * FROM arab;
 
-INSERT INTO 
