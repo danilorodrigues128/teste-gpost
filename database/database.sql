@@ -41,7 +41,7 @@ CREATE TABLE `work`(
     editor VARCHAR(100),
     place VARCHAR(100),
     author VARCHAR(100),
-    language VARCHAR(100),
+    language CHAR(2),
     keywords VARCHAR(200),
     description text,
 
@@ -56,7 +56,7 @@ CREATE TABLE `arab`(
     author VARCHAR(100),
     language VARCHAR(100),
     keywords VARCHAR(200),
-    description VARCHAR(100),
+    description TEXT,
 
     PRIMARY KEY(id)
 );
