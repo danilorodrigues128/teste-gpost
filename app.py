@@ -299,9 +299,9 @@ def post_user():
     name = request.form['name']
     username = request.form['username']
     password = request.form['password']
-    description = request.headers['description']
-    showUser = request.headers['showUser']
-    urlImage = request.headers['urlImage']
+    description = request.form['description']
+    showUser = request.form['showUser']
+    urlImage = request.form['urlImage']
     hash = request.headers['hash']
     
     cursor = mysql.connection.cursor()
@@ -345,7 +345,6 @@ def post_user():
 @app.route("/post_page", methods=['POST'])
 @cross_origin()
 def post_pages():
-    #test
     data = request.form['data']
     data_JSON = json.loads(data)
 
