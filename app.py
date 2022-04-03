@@ -104,6 +104,8 @@ def get_users():
 
         for row in range(len(data)):
             aux = {}
+            aux["name"] = str(data[row][1])
+            aux["username"] = str(data[row][2])
             aux["description"] = str(data[row][4])
             aux["show"] = str(data[row][5])
             aux["urlImg"] = str(data[row][6])

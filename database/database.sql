@@ -39,7 +39,8 @@ CREATE TABLE pagetab (
     PRIMARY KEY(id)
 );
 
-CREATE TABLE `work`(
+DROP TABLE work;
+CREATE TABLE work(
     id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(255),
     suport VARCHAR(255),

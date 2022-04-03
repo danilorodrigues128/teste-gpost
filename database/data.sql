@@ -9,7 +9,7 @@ INSERT INTO page VALUES(11, "postel", "Guillaume Postel", "Bibliographie de Guil
 INSERT INTO page VALUES(21, "humaniste", "Guillaume Postel", "Bibliographie de Guillaume Postel", "fr", "");
 INSERT INTO page VALUES(31, "oeuvres", "Les Oeuvres", "", "fr", "");
 INSERT INTO page VALUES(41, "arabe", "Une bibliothèque arabe prémoderne", "", "fr", "");
-INSERT INTO page VALUES(51, "bibliographe", "Bibliographie Générale", "", "fr", "");
+INSERT INTO page VALUES(51, "bibliographie", "Bibliographie Générale", "", "fr", "");
 
 DELETE FROM pagetab WHERE id <> 0;
 INSERT INTO pageTab VALUES(0, 1, "Description 1", "Ce site a pour objectif premier de mettre à disposition des chercheurs et des curieux l’ensemble des productions imprimées et manuscrites de Guillaume Postel. Graphomane, il a produit un nombre impressionnant d’écrits éparpillés au cours de sa vie mouvementée mais qui ont, pour beaucoup, été conservés. L’accès de nombre de ces textes est difficile tant par leur langue (ils sont majoritairement rédigés en latin) que par leur localisation ou leur faible diffusion. Nombre de ces textes ont été amendés par lui-même, attentif à faire évoluer sa pensée en fonction de ses lectures et de ses rencontres.");
@@ -33,8 +33,12 @@ INSERT INTO pageTab VALUES(0, 21, "Des Femmes", "3 Liste des oeuvres et manuscri
 INSERT INTO pageTab VALUES(0, 21, "Autres Auteurs Proches", "4 Liste des oeuvres et manuscrits qui traitent en lien avec leurs notices. 1 Liste des oeuvres et manuscrits qui traitent en lien avec leurs notices");
 INSERT INTO pageTab VALUES(0, 21, "Des détracteurs de postel", "5 Liste des oeuvres et manuscrits qui traitent en lien avec leurs notices. 1 Liste des oeuvres et manuscrits qui traitent en lien avec leurs notices");
 
+INSERT INTO pageTab VALUES(0, 31, "Les Oeuvres", "Example 2");
 
-INSERT INTO pageTab VALUES(0, 11, "Cartographe", "Auteur.");
+INSERT INTO pageTab VALUES(0, 41, "Rôle de Postel dans la collecte de manuscrits arabes", "Postel profite de ses séjours dans le monde ottoman pour acquérir des manuscrits en arabe mais aussi en turc ottoman. Il rappelle dans ses Paralipomènes qu’il est mandaté pour cela ce qui annonce les missions des Antiquaires du siècle suivant qui enrichiront les collections royales de manuscrits arabes à l’origine du fonds de la Bibliothèque Nationale de France. Il était rattaché officiellement à une ambassade française et a sans doute pu bénéficier par là d’une certaine confiance. Malheureusement, ses tribulations entre les deux voyages expliquent sans doute que nous n’ayons conservé qu’un seul manuscrit récupéré entre 1535 et 1537 1 . Georgi Levi Della Vida a fourni un travail exceptionnel sur le fonds arabe de la Bibliothèque Vaticane. Selon lui, aucun manuscrit arabe acquis par Postel lors de son premier voyage n’a été transmis à la bibliothèque palatine malgré le séjour qu’il passe en Italie à son retour.<br/>Selon toute vraisemblance, on n’en compte aucun non plus dans les collections françaises et sa correspondance, qui revient fréquemment sur la question, ne détaille pas la date exacte des acquisitions qu’il y mentionne. Faut-il croire qu’il est revenu en 1537 sans aucun manuscrit ? Qu’il les a perdus en cours de chemin ou laissés quelque part ? On pourrait se servir de ce qu’il est advenu de ceux qu’il a rapportés de son deuxième voyage et qui sont en nombre relativement important. Giorgio Levi Della Vida recence 11 manuscrits du fonds arabe de la bibliothèque Vaticane issus d’un « fonds Postel 2 ». Les pages 307 à 327 de son ouvrage sont entièrement consacrées au rôle majeur de l’humaniste français dans la constitution des fonds arabes des grandes bibliothèques européennes. Les manuscrits qu’il a patiemment colligés sont encore dispersés et restent sans doute encore à être découverts pour certains. Il faut chercher dans les lettres, notamment celles qu’il échange avec Massius son élève le plus proche, à qui il a enseigné l’arabe en Italie, pour tenter d’apercevoir l’ampleur de ses acquisitions. Josée Balagna-Costou en répertorie 25 ce qui est un nombre très important compte-tenu des difficultés matérielles que ce type d’achat représentent. Pour proposer une comparaison, on peut par exemple rappeler que lors de l’inventaire de Fontainebleau de la Biliothèque Royale, établi en 1544, seuls 6 manuscrits arabes sont répertoriés. Les acquisitions de Postel sont quatre fois plus nombreuses et concernent des domaines très divers.");
+
+INSERT INTO pageTab VALUES(0, 51, "Bibliographie Générale", "Example 1.");
+INSERT INTO pageTab VALUES(0, 51, "Autres Sites à Consulter", "Example 2");
 
 
 SELECT * FROM page;
@@ -42,7 +46,7 @@ SELECT * FROM page;
 -- DELETE FROM pagetab WHERE id <> 0;
 SELECT * FROM pagetab;
 
-SELECT * FROM page p, pagetab pt WHERE p.id = pt.idPage AND url = "index" AND language = "fr";
+SELECT * FROM page p, pagetab pt WHERE p.id = pt.idPage AND url = "bibliographie" AND language = "fr";
 
 SELECT * FROM arab;
 

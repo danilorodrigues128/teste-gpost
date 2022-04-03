@@ -4,3 +4,5 @@ SHOW TABLES;
 
 SELECT * FROM user;
 
+DROP TABLE team;
+
