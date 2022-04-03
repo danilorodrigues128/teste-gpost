@@ -115,7 +115,7 @@ def get_page():
 
             json_obj.append(aux)
         
-        return jsonify(json.dumps(json_obj))
+        return json.dumps(json_obj)
 
     except:
         return traceback.print_exc()
