@@ -92,9 +92,10 @@ def get_page():
     
     cursor = mysql.connection.cursor()
     urlPage = request.args.get('url')
+    languagePage = request.args.get('language')
 
     try:
-        cursor.execute("SELECT * FROM page p, pagetab pt WHERE p.id = pt.idPage AND url = %s", (urlPage,))
+        cursor.execute("SELECT * FROM page p, pagetab pt WHERE p.id = pt.idPage AND url = %s AND language = %s", (urlPage, languagePage))
         data = cursor.fetchall()
         mysql.connection.commit()
 
