@@ -102,7 +102,6 @@ def get_page():
         vec_json = "["
 
         for row in range(len(data)):
-            print(str(data[row][9]))
             aux = '{"id" : "'+ str(data[row][0]) + \
                 '", "url" : "'+ str(data[row][1]) + \
                     '", "title" : "'+ str(data[row][2]) + \
@@ -119,6 +118,7 @@ def get_page():
                 vec_json += ","
         
         vec_json += "]"
+        print(vec_json)
         return jsonify(json.loads(vec_json))
 
     except:
