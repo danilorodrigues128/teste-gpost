@@ -77,18 +77,20 @@ def get_user():
                 "status" : "Succeed",
                 "hash" : data[7],
             }
+
         else:
             json = {
                 "status" : "Failed",
                 "error" : "Username or password incorrect!"
             }
+
         return jsonify(json)
     except:
         return traceback.print_exc()
 
 @app.route("/get_users", methods=['GET'])
 @cross_origin()
-def get_user():
+def get_users():
 
     cursor = mysql.connection.cursor()
 
@@ -105,7 +107,7 @@ def get_user():
             aux["description"] = str(data[row][4])
             aux["show"] = str(data[row][5])
             aux["urlImg"] = str(data[row][6])
-            
+
 
             json_obj.append(aux)
         
