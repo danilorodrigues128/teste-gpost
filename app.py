@@ -105,6 +105,7 @@ def get_user():
             aux["description"] = str(data[row][4])
             aux["show"] = str(data[row][5])
             aux["urlImg"] = str(data[row][6])
+            
 
             json_obj.append(aux)
         
