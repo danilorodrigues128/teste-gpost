@@ -9,6 +9,8 @@ CREATE TABLE user(
     name VARCHAR(255),
     username VARCHAR(255),
     password VARCHAR(255),
+    description text,
+    showUser BOOLEAN DEFAULT 0,
     hash CHAR(32),
 
     PRIMARY KEY(id)

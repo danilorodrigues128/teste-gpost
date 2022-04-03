@@ -75,7 +75,9 @@ def get_user():
         if(flag):
             json = {
                 "status" : "Succeed",
-                "hash" : data[4],
+                "description" : data[4],
+                "show" : data[5],
+                "hash" : data[6],
             }
         else:
             json = {
@@ -269,6 +271,8 @@ def post_user():
     name = request.form['name']
     username = request.form['username']
     password = request.form['password']
+    description = request.headers['description']
+    showUser = request.headers['showUser']
     hash = request.headers['hash']
     
     cursor = mysql.connection.cursor()
@@ -290,7 +294,7 @@ def post_user():
 
         try:
             hash = generateHash()
-            cursor.execute("INSERT INTO user (name, username, password, hash) VALUES (%s, %s, %s, %s)", (name, username, password, hash))
+            cursor.execute("INSERT INTO user (name, username, password, description, showUser, hash) VALUES (%s, %s, %s, %s, %s, %s)", (name, username, password, description, int(showUser), hash))
             mysql.connection.commit()
 
             json = {
