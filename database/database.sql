@@ -11,6 +11,7 @@ CREATE TABLE user(
     password VARCHAR(255),
     description text,
     showUser BOOLEAN DEFAULT 0,
+    urlImage VARCHAR(255),
     hash CHAR(32),
 
     PRIMARY KEY(id)
@@ -62,15 +63,6 @@ CREATE TABLE `arab`(
     language VARCHAR(255),
     keywords VARCHAR(255),
     description VARCHAR(255),
-
-    PRIMARY KEY(id)
-);
-
-CREATE TABLE `team`(
-    id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255),
-    content TEXT,
-    urlImage VARCHAR(255),
 
     PRIMARY KEY(id)
 );

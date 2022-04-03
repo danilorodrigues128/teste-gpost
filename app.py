@@ -75,9 +75,7 @@ def get_user():
         if(flag):
             json = {
                 "status" : "Succeed",
-                "description" : data[4],
-                "show" : data[5],
-                "hash" : data[6],
+                "hash" : data[7],
             }
         else:
             json = {
@@ -85,6 +83,33 @@ def get_user():
                 "error" : "Username or password incorrect!"
             }
         return jsonify(json)
+    except:
+        return traceback.print_exc()
+
+@app.route("/get_users", methods=['GET'])
+@cross_origin()
+def get_user():
+
+    cursor = mysql.connection.cursor()
+
+    try:
+        cursor.execute("SELECT * FROM user")
+
+        data = cursor.fetchall()
+        mysql.connection.commit()
+
+        json_obj = []
+
+        for row in range(len(data)):
+            aux = {}
+            aux["description"] = str(data[row][4])
+            aux["show"] = str(data[row][5])
+            aux["urlImg"] = str(data[row][6])
+
+            json_obj.append(aux)
+        
+        return json.dumps(json_obj)
+
     except:
         return traceback.print_exc()
 
@@ -273,6 +298,7 @@ def post_user():
     password = request.form['password']
     description = request.headers['description']
     showUser = request.headers['showUser']
+    urlImage = request.headers['urlImage']
     hash = request.headers['hash']
     
     cursor = mysql.connection.cursor()
@@ -294,7 +320,7 @@ def post_user():
 
         try:
             hash = generateHash()
-            cursor.execute("INSERT INTO user (name, username, password, description, showUser, hash) VALUES (%s, %s, %s, %s, %s, %s)", (name, username, password, description, int(showUser), hash))
+            cursor.execute("INSERT INTO user (name, username, password, description, showUser, urlImage, hash) VALUES (%s, %s, %s, %s, %s, %s, %s)", (name, username, password, description, int(showUser), urlImage, hash))
             mysql.connection.commit()
 
             json = {

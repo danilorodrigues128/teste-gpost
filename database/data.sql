@@ -1,7 +1,7 @@
 SHOW TABLES;
 
 DELETE FROM user WHERE id <> 0;
-INSERT INTO user VALUES(0, "postel", "postel", "admin", "admin do groupe", 0, "2b9afa616f6820d810268b6f72068ae8");
+INSERT INTO user VALUES(0, "postel", "postel", "admin", "admin do groupe", 0, "", "2b9afa616f6820d810268b6f72068ae8");
 
 DELETE FROM page WHERE id <> 0;
 INSERT INTO page VALUES(1, "index", "Présentation du site", "Présentation du site", "fr", "");
