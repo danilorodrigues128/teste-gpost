@@ -103,20 +103,19 @@ def get_page():
 
         for row in range(len(data)):
             aux = {}
-            aux["id"] = '"' + str(data[row][0]) + '"'
-            aux["url"] = '"' + str(data[row][1]) + '"'
-            aux["title"] = '"' + str(data[row][2]) + '"'
-            aux["subtitle"] = '"' + str(data[row][3]) + '"'
-            aux["language"] = '"' + str(data[row][4]) + '"'
-            aux["urlImage"] = '"' + str(data[row][5]) + '"'
-            aux["idTab"] = '"' + str(data[row][6]) + '"'
-            aux["titleTab"] = '"' + str(data[row][8]) + '"'
-            aux["contentTab"] = '"' + str(data[row][9]) + '"'
+            aux["id"] = str(data[row][0])
+            aux["url"] = str(data[row][1])
+            aux["title"] = str(data[row][2])
+            aux["subtitle"] = str(data[row][3])
+            aux["language"] = str(data[row][4])
+            aux["urlImage"] = str(data[row][5])
+            aux["idTab"] = str(data[row][6])
+            aux["titleTab"] = str(data[row][8])
+            aux["contentTab"] = str(data[row][9])
 
             json_obj.append(aux)
         
-        print(json_obj)
-        return jsonify(json.dump(json_obj))
+        return jsonify(json.dumps(json_obj))
 
     except:
         return traceback.print_exc()
