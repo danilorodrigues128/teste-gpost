@@ -3,8 +3,8 @@ CREATE DATABASE `myDatabase` IF NOT EXISTS;
 
 -- USE `myDatabase`
 
-DROP TABLE 'user';
-CREATE TABLE `user`(
+DROP TABLE user;
+CREATE TABLE user(
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255),
     username VARCHAR(255),
@@ -14,7 +14,8 @@ CREATE TABLE `user`(
     PRIMARY KEY(id)
 );
 
-CREATE TABLE `page`(
+DROP TABLE page;
+CREATE TABLE page(
     id INT NOT NULL AUTO_INCREMENT,
     url VARCHAR(255),
     title VARCHAR(255),
@@ -25,7 +26,8 @@ CREATE TABLE `page`(
     PRIMARY KEY(id)
 );
 
-CREATE TABLE `pageTab` (
+DROP TABLE pagetab;
+CREATE TABLE pagetab (
     id INT NOT NULL AUTO_INCREMENT,
     idPage INT NOT NULL,
     title VARCHAR(255),
