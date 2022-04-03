@@ -99,27 +99,24 @@ def get_page():
         data = cursor.fetchall()
         mysql.connection.commit()
 
-        vec_json = "["
+        json_obj = []
 
         for row in range(len(data)):
-            aux = '{"id" : "'+ str(data[row][0]) + \
-                '", "url" : "'+ str(data[row][1]) + \
-                    '", "title" : "'+ str(data[row][2]) + \
-                        '", "subtitle" : "'+ str(data[row][3]) + \
-                            '", "language" : "'+ str(data[row][4]) + \
-                                '", "urlImage" : "'+ str(data[row][5]) + \
-                                    '", "idTab" : "'+ str(data[row][6]) + \
-                                        '", "titleTab" : "'+ str(data[row][8]) + \
-                                            '", "contentTab" : "'+ str(data[row][9]) + '"}'
+            aux = {}
+            aux["id"] = str(data[row][0])
+            aux["url"] = str(data[row][1])
+            aux["title"] = str(data[row][2])
+            aux["subtitle"] = str(data[row][3])
+            aux["language"] = str(data[row][4])
+            aux["urlImage"] = str(data[row][5])
+            aux["idTab"] = str(data[row][6])
+            aux["titleTab"] = str(data[row][8])
+            aux["contentTab"] = str(data[row][9])
 
-            vec_json += aux
-
-            if not (row == len(data) - 1):
-                vec_json += ","
+            json_obj.append(aux)
         
-        vec_json += "]"
-        print(vec_json)
-        return jsonify(json.loads(vec_json))
+        print(json_obj)
+        return jsonify(json.dump(json_obj))
 
     except:
         return traceback.print_exc()
