@@ -11,7 +11,7 @@ CREATE TABLE user(
     password VARCHAR(255),
     description text,
     showUser BOOLEAN DEFAULT 0,
-    urlImage VARCHAR(255),
+    urlImage text,
     hash CHAR(32),
 
     PRIMARY KEY(id)
@@ -24,7 +24,7 @@ CREATE TABLE page(
     title VARCHAR(255),
     subtitle VARCHAR(255),
     language CHAR(2),
-    urlImage VARCHAR(255),
+    urlImage text,
 
     PRIMARY KEY(id)
 );
@@ -42,15 +42,15 @@ CREATE TABLE pagetab (
 DROP TABLE work;
 CREATE TABLE work(
     id INT NOT NULL AUTO_INCREMENT,
-    title VARCHAR(255),
+    title TEXT,
     suport VARCHAR(255),
-    date INT(4),
+    date VARCHAR(255),
     editor VARCHAR(255),
     place VARCHAR(255),
     author VARCHAR(255),
     language VARCHAR(255),
     keywords VARCHAR(255),
-    description text,
+    description VARCHAR(255),
 
     PRIMARY KEY(id)
 );
@@ -76,7 +76,7 @@ CREATE TABLE `log`(
     showAuthor BOOLEAN DEFAULT 0,
     title VARCHAR(255),
     language CHAR(2),
-    urlImage VARCHAR(255),
+    urlImage text,
     content TEXT,
 
     PRIMARY KEY(id)
@@ -90,7 +90,7 @@ CREATE TABLE `blog`(
     showAuthor BOOLEAN DEFAULT 0,
     title VARCHAR(255),
     language CHAR(2),
-    urlImage VARCHAR(255),
+    urlImage text,
     content TEXT,
 
     PRIMARY KEY(id)

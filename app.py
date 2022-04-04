@@ -416,10 +416,10 @@ def post_works():
                     description = item["description"]
 
                     if (action == "insert") :
-                        cursor.execute("INSERT INTO work (title, suport, date, editor, place, author, language, keywords, description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (title, suport, int(date), editor, place, author, language, keywords, description))
+                        cursor.execute("INSERT INTO work (title, suport, date, editor, place, author, language, keywords, description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (title, suport, date, editor, place, author, language, keywords, description))
                     else :
                         idWork = item["id"]
-                        cursor.execute("UPDATE work SET title = %s, suport = %s, date = %s, editor = %s, place = %s, author = %s, language = %s, keywords = %s, description = %s WHERE id = %s", (title, suport, int(date), editor, place, author, language, keywords, description, int(idWork)))
+                        cursor.execute("UPDATE work SET title = %s, suport = %s, date = %s, editor = %s, place = %s, author = %s, language = %s, keywords = %s, description = %s WHERE id = %s", (title, suport, date, editor, place, author, language, keywords, description, int(idWork)))
                     mysql.connection.commit()
                     cursor.close()
                 elif action == "delete":
