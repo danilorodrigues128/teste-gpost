@@ -466,10 +466,10 @@ def post_arab():
                     description = item["description"]
 
                     if (action == "insert") :
-                        cursor.execute("INSERT INTO arab (title, suport, date, author, language, keywords, description) VALUES (%s, %s, %s, %s, %s, %s, %s)", (title, suport, int(date), author, language, keywords, description))
+                        cursor.execute("INSERT INTO arab (title, suport, date, author, language, keywords, description) VALUES (%s, %s, %s, %s, %s, %s, %s)", (title, suport, date, author, language, keywords, description))
                     else :
                         idArab = item["id"]
-                        cursor.execute("UPDATE arab SET title = %s, suport = %s, date = %s, author = %s, language = %s, keywords = %s, description = %s WHERE id = %s", (title, suport, int(date), author, language, keywords, description, int(idArab)))
+                        cursor.execute("UPDATE arab SET title = %s, suport = %s, date = %s, author = %s, language = %s, keywords = %s, description = %s WHERE id = %s", (title, suport, date, author, language, keywords, description, int(idArab)))
                     mysql.connection.commit()
                     cursor.close()
                 elif action == "delete":

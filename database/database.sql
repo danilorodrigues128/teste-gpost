@@ -55,11 +55,12 @@ CREATE TABLE work(
     PRIMARY KEY(id)
 );
 
-CREATE TABLE `arab`(
+DROP TABLE arab;
+CREATE TABLE arab(
     id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(255),
     suport VARCHAR(255),
-    date INT(4),
+    date VARCHAR(255),
     author VARCHAR(255),
     language VARCHAR(255),
     keywords VARCHAR(255),
