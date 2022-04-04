@@ -267,41 +267,56 @@ def get_log():
 @app.route("/post_user", methods=['POST'])
 @cross_origin()
 def post_user():
-    name = request.form['name']
-    username = request.form['username']
-    password = request.form['password']
-    description = request.form['description']
-    showUser = request.form['showUser']
-    urlImage = request.form['urlImage']
+    action = request.form['action']
     hash = request.headers['hash']
     
     cursor = mysql.connection.cursor()
 
     if(checkHash(hash)):
-        try:
-            # Check if have someone with this username
-            flag = cursor.execute("SELECT * FROM user WHERE `username` = %s", (username,))
-            mysql.connection.commit()
+        if (action == "insert") :
+            try:
+                username = request.form['username']
+                # Check if have someone with this username
+                flag = cursor.execute("SELECT * FROM user WHERE `username` = %s", (username,))
+                mysql.connection.commit()
 
-            if flag:
-                json = {
-                    "status" : "Failed",
-                    "error" : "Username already in use..."
-                }
-                return jsonify(json)
-        except:
-            return traceback.print_exc()
+                if flag:
+                    json = {
+                        "status" : "Failed",
+                        "error" : "Username already in use..."
+                    }
+                    return jsonify(json)
+            except:
+                return traceback.print_exc()
 
         try:
             hash = generateHash()
-            cursor.execute("INSERT INTO user (name, username, password, description, showUser, urlImage, hash) VALUES (%s, %s, %s, %s, %s, %s, %s)", (name, username, password, description, int(showUser), urlImage, hash))
+            if (action == "insert" or action == "update") :
+                name = request.form['name']
+                username = request.form['username']
+                password = request.form['password']
+                description = request.form['description']
+                showUser = request.form['showUser']
+                urlImage = request.form['urlImage']
+                
+                if (action == "insert") :
+                    cursor.execute("INSERT INTO user (name, username, password, description, showUser, urlImage, hash) VALUES (%s, %s, %s, %s, %s, %s, %s)", (name, username, password, description, int(showUser), urlImage, hash))
+                elif (action == "delete") :
+                    idUser = request.form['id']
+                    cursor.execute("UPDATE user SET name = %s, username = %s, password = %s, description = %s, showUser = %s, urlImage = %s WHERE id = %s", (name, username, password, description, int(showUser), urlImage, idUser))
+                
+                
+            elif (action == "delete") :
+                idUser = request.form['id']
+                cursor.execute("DELETE FROM user WHERE id = %s", (idUser, ))
+
             mysql.connection.commit()
 
             json = {
                 "status" : "Succeed",
                 "hash" : hash,
                 "message" : "User created with success..."
-            }
+            }   
 
             return jsonify(json)
         except:
@@ -491,7 +506,7 @@ def post_log():
             elif (action == "delete") :
                 idLog = request.form['id']
                 cursor.execute("DELETE FROM log WHERE id = %s", (int(idLog), ))
-                
+
             mysql.connection.commit()
 
             json = {
