@@ -224,37 +224,6 @@ def get_arab():
     except:
         return traceback.print_exc()
 
-@app.route("/get_team", methods=['GET'])
-@cross_origin()
-def get_team():
-    
-    cursor = mysql.connection.cursor()
-
-    try:
-        cursor.execute("SELECT * FROM team WHERE 1")
-        data = cursor.fetchall()
-        mysql.connection.commit()
-
-        vec_json = "["
-
-        for row in range(len(data)):
-            aux = '{"id" : "'+ str(data[row][0]) + \
-                '", "name" : "'+ str(data[row][1]) + \
-                    '", "content" : "'+ str(data[row][2]) + \
-                        '", "urlImage" : "'+ str(data[row][3]) + '"}'
-
-            vec_json += aux
-
-            if not (row == len(data) - 1):
-                vec_json += ","
-        
-        vec_json += "]"
-        #print(vec_json)
-        return jsonify(json.loads(vec_json))
-
-    except:
-        return traceback.print_exc()
-
 @app.route("/get_log")
 @cross_origin()
 def get_log():
@@ -492,37 +461,6 @@ def post_arab():
             }
         return jsonify(vec_json)
 
-@app.route("/post_team", methods=['POST'])
-@cross_origin()
-def post_team():
-    name = request.form['name']
-    content = request.form['content']
-    urlImage = request.form['urlImage']
-    
-    hash = request.headers['hash']
-    
-    cursor = mysql.connection.cursor()
-
-    if(checkHash(hash)):
-
-        try:
-            cursor.execute("INSERT INTO team (name, content, urlImage) VALUES (%s, %s, %s)", (name, content, urlImage))
-            mysql.connection.commit()
-
-            json = {
-                "status" : "Succeed",
-                "message" : "Team created with success..."
-            }
-
-            return jsonify(json)
-        except:
-            return traceback.print_exc()
-    else:
-        json = {
-                "status" : "Failed",
-                "message" : "Invalid hash!"
-            }
-        return jsonify(json)
 
 @app.route("/post_log", methods=['POST'])
 @cross_origin()
@@ -534,15 +472,26 @@ def post_log():
 
     if(checkHash(hash)):
         try:
-            url = request.form['url']
-            date = request.form['date']
-            author = request.form['author']
-            showAuthor = request.form['showAuthor']
-            title = request.form['title']
-            language = request.form['language']
-            urlImage = request.form['urlImage']
-            content = request.form['content']
-            cursor.execute("INSERT INTO log (url, date, author, showAuthor, title, language, urlImage, content) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (url, date, author, showAuthor, title, language, urlImage, content))
+            action = request.form['action']
+
+            if (action == "insert" or action == "update"):
+                url = request.form['url']
+                author = request.form['author']
+                showAuthor = request.form['showAuthor']
+                title = request.form['title']
+                language = request.form['language']
+                urlImage = request.form['urlImage']
+                content = request.form['content']
+
+                if (action == "insert") :
+                    cursor.execute("INSERT INTO log (url, date, author, showAuthor, title, language, urlImage, content) VALUES (%s, NOW(), %s, %s, %s, %s, %s, %s)", (url, author, showAuthor, title, language, urlImage, content))
+                else :
+                    idLog = request.form['id']
+                    cursor.execute("UPDATE log SET url = %s, date = NOW(), author = %s, showAuthor = %s, title = %s, language = %s, urlImage = %s, content = %s WHERE id = %s", (url, author, showAuthor, title, language, urlImage, content, int(idLog)))
+            elif (action == "delete") :
+                idLog = request.form['id']
+                cursor.execute("DELETE FROM log WHERE id = %s", (int(idLog), ))
+                
             mysql.connection.commit()
 
             json = {
