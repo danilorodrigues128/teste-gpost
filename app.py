@@ -160,7 +160,7 @@ def get_pages():
                 aux["title"] = str(data[row][2])
                 aux["content"] = str(data[row][3])
 
-                json_obj[json_obj.index(pageId)]["tabs"].append(aux)
+                json_obj[lst_pageId.index(pageId)]["tabs"].append(aux)
 
             cursor.close()
         
