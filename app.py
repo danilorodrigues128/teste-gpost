@@ -197,26 +197,22 @@ def get_arab():
         data = cursor.fetchall()
         mysql.connection.commit()
 
-        vec_json = "["
+        json_obj = []
 
         for row in range(len(data)):
-            aux = '{"id" : "'+ str(data[row][0]) + \
-                '", "title" : "'+ str(data[row][1]) + \
-                    '", "suport" : "'+ str(data[row][2]) + \
-                        '", "date" : "'+ str(data[row][3]) + \
-                            '", "author" : "'+ str(data[row][4]) + \
-                                '", "language" : "'+ str(data[row][5]) + \
-                                    '", "keywords" : "'+ str(data[row][6]) + \
-                                        '", "descriptions" : "'+ str(data[row][7]) + '"}'
+            aux = {}
+            aux["id"] = str(data[row][0])
+            aux["title"] = str(data[row][1])
+            aux["suport"] = str(data[row][2])
+            aux["date"] = str(data[row][3])
+            aux["author"] = str(data[row][4])
+            aux["language"] = str(data[row][5])
+            aux["keywords"] = str(data[row][6])
+            aux["descriptions"] = str(data[row][7])
 
-            vec_json += aux
-
-            if not (row == len(data) - 1):
-                vec_json += ","
+            json_obj.append(aux)
         
-        vec_json += "]"
-        #print(vec_json)
-        return jsonify(json.loads(vec_json))
+        return json.dumps(json_obj)
 
     except:
         return traceback.print_exc()
