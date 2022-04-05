@@ -119,6 +119,56 @@ def get_users():
     except:
         return traceback.print_exc()
 
+@app.route("/get_pages", methods=['GET'])
+@cross_origin()
+def get_pages():
+    
+    cursor = mysql.connection.cursor()
+
+    try:
+        cursor.execute("SELECT * FROM page")
+        data = cursor.fetchall()
+        mysql.connection.commit()
+
+        json_obj = []
+        lst_pageId = []
+
+        for row in range(len(data)):
+            aux = {}
+            aux["id"] = str(data[row][0])
+            aux["url"] = str(data[row][1])
+            aux["title"] = str(data[row][2])
+            aux["subtitle"] = str(data[row][3])
+            aux["language"] = str(data[row][4])
+            aux["urlImage"] = str(data[row][5])
+            aux["tabs"] = []
+
+            lst_pageId.append(int(data[row][0]))
+            json_obj.append(aux)
+        
+        cursor.close()
+
+        for pageId in lst_pageId :
+            cursor = mysql.connection.cursor()
+            cursor.execute("SELECT * FROM pagetab WHERE idPage = %s", (int(pageId), ))
+            data = cursor.fetchall()
+            mysql.connection.commit()
+
+            for row in range(len(data)):
+                aux = {}
+                aux["idTab"] = str(data[row][0])
+                aux["title"] = str(data[row][2])
+                aux["content"] = str(data[row][3])
+
+                json_obj[json_obj.index(pageId)]["tabs"].append(aux)
+
+            cursor.close()
+        
+        return json.dumps(json_obj)
+
+    except:
+        return traceback.print_exc()
+
 @app.route("/get_page", methods=['GET'])
 @cross_origin()
 def get_page():
