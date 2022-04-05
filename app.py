@@ -197,25 +197,30 @@ def get_arab():
         data = cursor.fetchall()
         mysql.connection.commit()
 
-        json_obj = []
+        vec_json = "["
 
         for row in range(len(data)):
-            aux = {}
-            aux["id"] = str(data[row][0])
-            aux["title"] = str(data[row][1])
-            aux["suport"] = str(data[row][2])
-            aux["date"] = str(data[row][3])
-            aux["author"] = str(data[row][4])
-            aux["language"] = str(data[row][5])
-            aux["keywords"] = str(data[row][6])
-            aux["descriptions"] = str(data[row][7])
+            aux = '{"id" : "'+ str(data[row][0]) + \
+                '", "title" : "'+ str(data[row][1]) + \
+                    '", "suport" : "'+ str(data[row][2]) + \
+                        '", "date" : "'+ str(data[row][3]) + \
+                            '", "author" : "'+ str(data[row][4]) + \
+                                '", "language" : "'+ str(data[row][5]) + \
+                                    '", "keywords" : "'+ str(data[row][6]) + \
+                                        '", "descriptions" : "'+ str(data[row][7]) + '"}'
 
-            json_obj.append(aux)
+            vec_json += aux
+
+            if not (row == len(data) - 1):
+                vec_json += ","
         
-        return json.dumps(json_obj)
+        vec_json += "]"
+        #print(vec_json)
+        return jsonify(json.loads(vec_json))
 
     except:
         return traceback.print_exc()
+
 
 @app.route("/get_log")
 @cross_origin()
@@ -227,27 +232,23 @@ def get_log():
         data = cursor.fetchall()
         mysql.connection.commit()
 
-        vec_json = "["
+        json_obj = []
 
         for row in range(len(data)):
-            aux = '{"id" : "'+ str(data[row][0]) + \
-                '", "url" : "'+ str(data[row][1]) + \
-                    '", "date" : "'+ str(data[row][2]) + \
-                        '", "author" : "'+ str(data[row][3]) + \
-                            '", "showAuthor" : "'+ str(data[row][4]) + \
-                                '", "title" : "'+ str(data[row][5]) + \
-                                    '", "language" : "'+ str(data[row][6]) + \
-                                        '", "urlImage" : "'+ str(data[row][7]) + \
-                                            '", "content" : "'+ str(data[row][8]) + '"}'
+            aux = {}
+            aux["id"] = str(data[row][0])
+            aux["url"] = str(data[row][1])
+            aux["date"] = str(data[row][2])
+            aux["author"] = str(data[row][3])
+            aux["showAuthor"] = str(data[row][4])
+            aux["title"] = str(data[row][5])
+            aux["language"] = str(data[row][6])
+            aux["urlImage"] = str(data[row][7])
+            aux["content"] = str(data[row][8])
 
-            vec_json += aux
-
-            if not (row == len(data) - 1):
-                vec_json += ","
+            json_obj.append(aux)
         
-        vec_json += "]"
-        #print(vec_json)
-        return jsonify(json.loads(vec_json))
+        return json.dumps(json_obj)
 
     except:
         return traceback.print_exc()
