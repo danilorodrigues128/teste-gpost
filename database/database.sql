@@ -69,24 +69,11 @@ CREATE TABLE arab(
     PRIMARY KEY(id)
 );
 
-CREATE TABLE `log`(
+DROP TABLE log;
+CREATE TABLE log(
     id INT NOT NULL AUTO_INCREMENT,
     url VARCHAR(255),
     date DATETIME,
-    author VARCHAR(255),
-    showAuthor BOOLEAN DEFAULT 0,
-    title VARCHAR(255),
-    language CHAR(2),
-    urlImage text,
-    content TEXT,
-
-    PRIMARY KEY(id)
-);
-
-CREATE TABLE `blog`(
-    id INT NOT NULL AUTO_INCREMENT,
-    url VARCHAR(255),
-    data DATETIME,
     author VARCHAR(255),
     showAuthor BOOLEAN DEFAULT 0,
     title VARCHAR(255),
