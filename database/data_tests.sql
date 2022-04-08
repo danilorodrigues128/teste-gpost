@@ -6,3 +6,4 @@ SELECT * FROM user;
 
 DROP TABLE team;
 
+SELECT MAX(id) FROM page;

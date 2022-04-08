@@ -371,34 +371,35 @@ def post_user():
 @app.route("/post_page", methods=['POST'])
 @cross_origin()
 def post_pages():
-    data = request.form['data']
-    data_JSON = json.loads(data)
+    url = request.form['url']
+    title = request.form['title']
+    subtitle = request.form['subtitle']
+    language = request.form['language']
+    urlImage = request.form['urlImage']
+    tabs = request.form['tabs']
+
+    tabs_JSON = json.loads(tabs)
 
     hash = request.headers['hash']
     
     if(checkHash(hash)):
         try:
-            for item in data_JSON :
-                cursor = mysql.connection.cursor()
+            cursor = mysql.connection.cursor()
 
-                action = item["action"]
-                if action == "insert" or action == "update":
-                    title = item["title"]
-                    content = item["content"]
+            cursor.execute("INSERT INTO page VALUES(0, %s, %s, %s, %s, %s)", (url, title, subtitle, language, urlImage))
+            mysql.connection.commit()
 
-                    if action == "insert":
-                        idpage = item["idPage"]
-                        cursor.execute("INSERT INTO pageTab(idPage, title, content) VALUES (%s, %s, %s)", (int(idpage), title, content))
-                    elif action == "update":
-                        idTabpage = item["id"]
-                        cursor.execute("UPDATE pageTab SET title = %s, content = %s WHERE id = %s", (title, content, int(idTabpage)))
-                    
-                elif action == "delete":
-                    idTabpage = item["id"]
-                    cursor.execute("DELETE FROM pageTab WHERE id = %s", (int(idTabpage), ))
+            cursor.execute("SELECT MAX(id) FROM page")
+            data = cursor.fetchone()
+            mysql.connection.commit()
 
+            idPage = data[0]
+
+            for tab in tabs_JSON :
+                cursor.execute("INSERT INTO pageTab VALUES(0, %s, %s, %s);", (int(idPage), tab["title"], tab["content"]))
                 mysql.connection.commit()
-                cursor.close()
+
+            cursor.close()
 
             vec_json = {
                 "status" : "Succeed",
