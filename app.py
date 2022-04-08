@@ -371,33 +371,45 @@ def post_user():
 @app.route("/post_page", methods=['POST'])
 @cross_origin()
 def post_pages():
-    url = request.form['url']
-    title = request.form['title']
-    subtitle = request.form['subtitle']
-    language = request.form['language']
-    urlImage = request.form['urlImage']
-    tabs = request.form['tabs']
 
-    tabs_JSON = json.loads(tabs)
-
+    action = request.form['action']
     hash = request.headers['hash']
     
     if(checkHash(hash)):
         try:
             cursor = mysql.connection.cursor()
 
-            cursor.execute("INSERT INTO page VALUES(0, %s, %s, %s, %s, %s)", (url, title, subtitle, language, urlImage))
-            mysql.connection.commit()
+            if action == "delete" :
+                idPage = request.form['idPage']
 
-            cursor.execute("SELECT MAX(id) FROM page")
-            data = cursor.fetchone()
-            mysql.connection.commit()
-
-            idPage = data[0]
-
-            for tab in tabs_JSON :
-                cursor.execute("INSERT INTO pageTab VALUES(0, %s, %s, %s);", (int(idPage), tab["title"], tab["content"]))
+                cursor.execute("DELETE FROM page WHERE id = %s", (int(idPage), ))
                 mysql.connection.commit()
+                
+                cursor.execute("DELETE FROM pagetab WHERE idPage = %s", (int(idPage), ))
+                mysql.connection.commit()
+
+            elif action == "insert":
+                url = request.form['url']
+                title = request.form['title']
+                subtitle = request.form['subtitle']
+                language = request.form['language']
+                urlImage = request.form['urlImage']
+                tabs = request.form['tabs']
+
+                tabs_JSON = json.loads(tabs)
+
+                cursor.execute("INSERT INTO page VALUES(0, %s, %s, %s, %s, %s)", (url, title, subtitle, language, urlImage))
+                mysql.connection.commit()
+
+                cursor.execute("SELECT MAX(id) FROM page")
+                data = cursor.fetchone()
+                mysql.connection.commit()
+
+                idPage = data[0]
+
+                for tab in tabs_JSON :
+                    cursor.execute("INSERT INTO pageTab VALUES(0, %s, %s, %s);", (int(idPage), tab["title"], tab["content"]))
+                    mysql.connection.commit()
 
             cursor.close()
 
