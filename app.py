@@ -260,7 +260,7 @@ def get_arab():
             aux["language"] = str(data[row][5])
             aux["keywords"] = str(data[row][6])
             aux["link"] = str(data[row][7])
-            aux["descriptions"] = str(data[row][7])
+            aux["descriptions"] = str(data[row][8])
 
             json_obj.append(aux)
         
@@ -459,7 +459,7 @@ def post_works():
                         cursor.execute("INSERT INTO work (title, suport, date, editor, place, author, language, keywords, link, description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (title, suport, date, editor, place, author, language, keywords, link, description))
                     else :
                         idWork = item["id"]
-                        cursor.execute("UPDATE work SET title = %s, suport = %s, date = %s, editor = %s, place = %s, author = %s, language = %s, keywords = %s, link = %s, description = %s WHERE id = %s", (title, suport, date, editor, place, author, language, keywords, description, link, int(idWork)))
+                        cursor.execute("UPDATE work SET title = %s, suport = %s, date = %s, editor = %s, place = %s, author = %s, language = %s, keywords = %s, link = %s, description = %s WHERE id = %s", (title, suport, date, editor, place, author, language, keywords, link, description, int(idWork)))
                     mysql.connection.commit()
                     cursor.close()
                 elif action == "delete":
