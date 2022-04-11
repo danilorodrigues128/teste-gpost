@@ -50,7 +50,8 @@ CREATE TABLE work(
     author VARCHAR(255),
     language VARCHAR(255),
     keywords VARCHAR(255),
-    description VARCHAR(255),
+    link VARCHAR(255),
+    description TEXT,
 
     PRIMARY KEY(id)
 );
@@ -64,7 +65,8 @@ CREATE TABLE arab(
     author VARCHAR(255),
     language VARCHAR(255),
     keywords VARCHAR(255),
-    description VARCHAR(255),
+    link VARCHAR(255),
+    description TEXT,
 
     PRIMARY KEY(id)
 );
