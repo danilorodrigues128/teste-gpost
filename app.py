@@ -227,7 +227,8 @@ def get_works():
             aux["author"] = str(data[row][6])
             aux["language"] = str(data[row][7])
             aux["keywords"] = str(data[row][8])
-            aux["descriptions"] = str(data[row][9])
+            aux["link"] = str(data[row][9])
+            aux["descriptions"] = str(data[row][10])
 
             json_obj.append(aux)
         
@@ -258,6 +259,7 @@ def get_arab():
             aux["author"] = str(data[row][4])
             aux["language"] = str(data[row][5])
             aux["keywords"] = str(data[row][6])
+            aux["link"] = str(data[row][7])
             aux["descriptions"] = str(data[row][7])
 
             json_obj.append(aux)
@@ -450,13 +452,14 @@ def post_works():
                     author = item["author"]
                     language = item["language"]
                     keywords = item["keywords"]
+                    link = item["link"]
                     description = item["description"]
 
                     if (action == "insert") :
-                        cursor.execute("INSERT INTO work (title, suport, date, editor, place, author, language, keywords, description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (title, suport, date, editor, place, author, language, keywords, description))
+                        cursor.execute("INSERT INTO work (title, suport, date, editor, place, author, language, keywords, link, description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (title, suport, date, editor, place, author, language, keywords, link, description))
                     else :
                         idWork = item["id"]
-                        cursor.execute("UPDATE work SET title = %s, suport = %s, date = %s, editor = %s, place = %s, author = %s, language = %s, keywords = %s, description = %s WHERE id = %s", (title, suport, date, editor, place, author, language, keywords, description, int(idWork)))
+                        cursor.execute("UPDATE work SET title = %s, suport = %s, date = %s, editor = %s, place = %s, author = %s, language = %s, keywords = %s, link = %s, description = %s WHERE id = %s", (title, suport, date, editor, place, author, language, keywords, description, link, int(idWork)))
                     mysql.connection.commit()
                     cursor.close()
                 elif action == "delete":
@@ -500,13 +503,14 @@ def post_arab():
                     author = item["author"]
                     language = item["language"]
                     keywords = item["keywords"]
+                    link = item["link"]
                     description = item["description"]
 
                     if (action == "insert") :
-                        cursor.execute("INSERT INTO arab (title, suport, date, author, language, keywords, description) VALUES (%s, %s, %s, %s, %s, %s, %s)", (title, suport, date, author, language, keywords, description))
+                        cursor.execute("INSERT INTO arab (title, suport, date, author, language, keywords, link, description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (title, suport, date, author, language, keywords, link, description))
                     else :
                         idArab = item["id"]
-                        cursor.execute("UPDATE arab SET title = %s, suport = %s, date = %s, author = %s, language = %s, keywords = %s, description = %s WHERE id = %s", (title, suport, date, author, language, keywords, description, int(idArab)))
+                        cursor.execute("UPDATE arab SET title = %s, suport = %s, date = %s, author = %s, language = %s, keywords = %s, link = %s, description = %s WHERE id = %s", (title, suport, date, author, language, keywords, link, description, int(idArab)))
                     mysql.connection.commit()
                     cursor.close()
                 elif action == "delete":
