@@ -337,7 +337,8 @@ def post_user():
             if (action == "insert" or action == "update") :
                 name = request.form['name']
                 username = request.form['username']
-                password = request.form['password']
+                if(request.form['password']):
+                    password = request.form['password']
                 description = request.form['description']
                 showUser = request.form['showUser']
                 urlImage = request.form['urlImage']
@@ -346,7 +347,10 @@ def post_user():
                     cursor.execute("INSERT INTO user (name, username, password, description, showUser, urlImage, hash) VALUES (%s, %s, %s, %s, %s, %s, %s)", (name, username, password, description, int(showUser), urlImage, hash))
                 elif (action == "update") :
                     idUser = request.form['id']
-                    cursor.execute("UPDATE user SET name = %s, username = %s, password = %s, description = %s, showUser = %s, urlImage = %s WHERE id = %s", (name, username, password, description, int(showUser), urlImage, idUser))
+                    if(request.form['password']):
+                        cursor.execute("UPDATE user SET name = %s, username = %s, description = %s, showUser = %s, urlImage = %s WHERE id = %s", (name, username, description, int(showUser), urlImage, idUser))
+                    else:
+                        cursor.execute("UPDATE user SET name = %s, username = %s, password = %s, description = %s, showUser = %s, urlImage = %s WHERE id = %s", (name, username, password, description, int(showUser), urlImage, idUser))
                 
                 
             elif (action == "delete") :
