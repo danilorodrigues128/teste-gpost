@@ -76,6 +76,7 @@ def get_user():
             json = {
                 "status" : "Succeed",
                 "hash" : data[7],
+                "id": data[0],
             }
 
         else:
