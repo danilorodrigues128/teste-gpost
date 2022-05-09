@@ -160,6 +160,7 @@ def get_pages():
                 aux["idTab"] = str(data[row][0])
                 aux["title"] = str(data[row][2])
                 aux["content"] = str(data[row][3])
+                aux["urlImage"] = str(data[row][4])
 
                 json_obj[lst_pageId.index(pageId)]["tabs"].append(aux)
 
@@ -196,6 +197,7 @@ def get_page():
             aux["idTab"] = str(data[row][6])
             aux["titleTab"] = str(data[row][8])
             aux["contentTab"] = str(data[row][9])
+            aux["urlTab"] = str(data[row][10])
 
             json_obj.append(aux)
         
@@ -415,7 +417,7 @@ def post_pages():
                 idPage = data[0]
 
                 for tab in tabs_JSON :
-                    cursor.execute("INSERT INTO pageTab VALUES(0, %s, %s, %s);", (int(idPage), tab["title"], tab["content"]))
+                    cursor.execute("INSERT INTO pageTab VALUES(0, %s, %s, %s);", (int(idPage), tab["title"], tab["content"], tab["urlImage"]))
                     mysql.connection.commit()
 
             cursor.close()

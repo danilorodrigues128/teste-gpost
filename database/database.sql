@@ -35,6 +35,7 @@ CREATE TABLE pagetab (
     idPage INT NOT NULL,
     title VARCHAR(255),
     content TEXT,
+    urlImage text,
     
     PRIMARY KEY(id)
 );
