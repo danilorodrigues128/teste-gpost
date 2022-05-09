@@ -417,7 +417,7 @@ def post_pages():
                 idPage = data[0]
 
                 for tab in tabs_JSON :
-                    cursor.execute("INSERT INTO pageTab VALUES(0, %s, %s, %s);", (int(idPage), tab["title"], tab["content"], tab["urlImage"]))
+                    cursor.execute("INSERT INTO pageTab VALUES(0, %s, %s, %s, %s);", (int(idPage), tab["title"], tab["content"], tab["urlImage"]))
                     mysql.connection.commit()
 
             cursor.close()
