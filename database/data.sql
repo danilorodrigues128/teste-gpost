@@ -45,6 +45,7 @@ SELECT * FROM page;
 
 -- DELETE FROM pagetab WHERE id <> 0;
 SELECT * FROM pagetab;
+SELECT * FROM pagetab WHERE idPage = 861;
 
 SELECT * FROM page p, pagetab pt WHERE p.id = pt.idPage AND url = "bibliographie" AND language = "fr";
 
