@@ -31,9 +31,9 @@ mysql = MySQL(app)
 '''
 # Path of MySQL Database (heroku)
 app.config['MYSQL_HOST'] = 'eu-cdbr-west-02.cleardb.net'
-app.config['MYSQL_USER'] = 'ba0cee386b45a4'
-app.config['MYSQL_PASSWORD'] = '2e6e7e7f'
-app.config['MYSQL_DB'] = 'heroku_c78f6c3eaaf5da1'
+app.config['MYSQL_USER'] = 'b20f2d5bcc9f24'
+app.config['MYSQL_PASSWORD'] = '28f7e0b9'
+app.config['MYSQL_DB'] = 'heroku_fbe679edab56750'
 mysql = MySQL(app)
 
 
